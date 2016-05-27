@@ -2,7 +2,7 @@
 
 In this assignment, you are going to be creating a (simple) static site builder for blogs.
 
-## Example
+## The Example
 
 Given the [`examples/simple/`](examples/simple/) as the input, which looks like this:
 
