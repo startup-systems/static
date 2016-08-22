@@ -77,5 +77,5 @@ Fill in the [`generate.sh`](generate.sh) shell script with your code. You should
 # install test runner
 pip install -U pytest
 # run tests
-pytest -s
+pytest -sv
 ```
