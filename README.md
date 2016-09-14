@@ -77,8 +77,8 @@ Inside your [virtual machine](https://docs.google.com/document/d/1sQALBnjr2j0i2F
 
 ```bash
 cd path/to/this/repository/
-# install test runner
-pip install -U pytest
+# install dependencies
+pip install -r requirements.txt
 # run tests
 ./bin/test
 ```
