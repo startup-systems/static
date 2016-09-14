@@ -3,6 +3,13 @@ import subprocess
 import tempfile
 from bs4 import BeautifulSoup
 
+def check_file(path, title, body):
+    soup = BeautifulSoup(open(path), 'html.parser')
+    titletag = soup.find('title')
+    assert titletag.string.strip() == title
+    bodytag = soup.find('body')
+    assert bodytag.string.strip() == body
+
 def test_simple():
     with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
         result = subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
@@ -14,16 +21,8 @@ def test_simple():
 
         # check that files have appropriate content
 
-        path = os.path.join(tmpdirname, files[0])
-        soup = BeautifulSoup(open(path), 'html.parser')
-        title = soup.find('title')
-        assert title.string.strip() == "Post 1 Title"
-        body = soup.find('body')
-        assert body.string.strip() == "This is the body of Post 1."
+        potst1path = os.path.join(tmpdirname, files[0])
+        check_file(potst1path, "Post 1 Title", "This is the body of Post 1.")
 
-        path = os.path.join(tmpdirname, files[1])
-        soup = BeautifulSoup(open(path), 'html.parser')
-        title = soup.find('title')
-        assert title.string.strip() == "Post 2 Title"
-        body = soup.find('body')
-        assert body.string.strip() == "This is the body of Post 2."
+        post2path = os.path.join(tmpdirname, files[1])
+        check_file(post2path, "Post 2 Title", "This is the body of Post 2.")
