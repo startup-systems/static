@@ -73,9 +73,12 @@ Fill in the [`generate.sh`](generate.sh) shell script with your code. You should
 
 ## Run tests locally
 
+Inside your [virtual machine](https://docs.google.com/document/d/1sQALBnjr2j0i2Fo2e9hm-4z4x4KiEYdMOZFPE1MH4DM/edit):
+
 ```bash
+cd path/to/this/repository/
 # install test runner
 pip install -U pytest
 # run tests
-pytest -sv
+./bin/test
 ```
