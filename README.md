@@ -65,6 +65,7 @@ Fill in the [`generate.sh`](generate.sh) shell script with your code. You should
 ## Things you might need
 
 * Loop(s)
+* `basename`
 * `sed`
 * `head`
 * `tail`
