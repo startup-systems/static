@@ -9,8 +9,8 @@ Given the [`examples/simple/`](examples/simple/) as the input, which looks like 
 ```
 examples/
 — simple/
-  — page1.txt
-  — page2.txt
+  — postone.txt
+  — some-other-post.txt
 ```
 
 running the following:
@@ -23,11 +23,11 @@ should create:
 
 ```
 output/
-— page1.html
-— page2.html
+— postone.html
+— some-other-post.html
 ```
 
-In other words, for each of the original `.txt` files, a corresponding `.html` file should be created. If [`examples/simple/post1.txt`](`examples/simple/post1.txt`) contains
+In other words, for each of the original `.txt` files, a corresponding `.html` file should be created. If [`examples/simple/postone.txt`](`examples/simple/postone.txt`) contains
 
 ```
 Post 1 Title
@@ -35,7 +35,7 @@ Post 1 Title
 This is the body of Post 1.
 ```
 
-then `output/post1.html` should look like
+then `output/postone.html` should look like
 
 ```html
 <!DOCTYPE html>

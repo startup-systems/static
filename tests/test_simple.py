@@ -14,7 +14,7 @@ def test_files():
 
         files = os.listdir(tmpdirname)
         files.sort()
-        assert files == ['post1.html', 'post2.html']
+        assert files == ['postone.html', 'some-other-post.html']
 
 def test_content():
     with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
@@ -24,7 +24,7 @@ def test_content():
         files.sort()
 
         potst1path = os.path.join(tmpdirname, files[0])
-        check_content(potst1path, "Post 1 Title", "This is the body of Post 1.")
+        check_content(potst1path, "Post One Title", "This is the body of Post One.")
 
-        post2path = os.path.join(tmpdirname, files[1])
-        check_content(post2path, "Post 2 Title", "This is the body of Post 2.")
+        otherpostpath = os.path.join(tmpdirname, files[1])
+        check_content(otherpostpath, "Some Other Post Title", "This is the body of the other post.")
