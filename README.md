@@ -55,7 +55,7 @@ then `output/postone.html` should look like
 * The script takes two arguments:
     1. The input directory
     1. The output directory
-* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory.
+* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory. It should work with any number of input files, with any arbitrary names.
 * The first line of each text file is the title, then there's an empty line, then the rest is the body.
 * The generated pages should use the provided [template HTML file](template.html), replacing the `{{title}}` and `{{body}}`.
 * If the output directory doesn't exist, create it and any missing parent directories (a.k.a. "recursively").
@@ -78,5 +78,10 @@ Inside your [virtual machine](https://github.com/startup-systems/vm):
 
 ```bash
 cd /vagrant/static
-./bin/test
+# install dependencies
+pip3 install -r requirements.txt
+# run the "simple" tests (get these passing first)
+pytest -k simple
+# run all tests
+pytest
 ```
