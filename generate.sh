@@ -13,13 +13,12 @@ if [ ! -d "$output_dir" ]; then
 fi
 
 # for each text file in input directory
-for file in "$input_path"/*.txt
+for file in "$input_path"*.txt
 do
 	title=$(head -n 1 $file)
 	body=$(tail -n +3 $file)
 
 	filename=$(basename --suffix=".txt" $file) # strip file name of directory and extension
-	echo "$body" >> log.txt
 
 	#create the output file
 	touch "$output_dir/$filename.html"
