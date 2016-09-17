@@ -74,12 +74,9 @@ Fill in the [`generate.sh`](generate.sh) shell script with your code. You should
 
 ## Run tests locally
 
-Inside your [virtual machine](https://docs.google.com/document/d/1sQALBnjr2j0i2Fo2e9hm-4z4x4KiEYdMOZFPE1MH4DM/edit):
+Inside your [virtual machine](https://github.com/startup-systems/vm):
 
 ```bash
-cd path/to/this/repository/
-# install dependencies
-pip3 install -r requirements.txt
-# run tests
+cd /vagrant/static
 ./bin/test
 ```

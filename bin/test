@@ -2,4 +2,8 @@
 
 set -e
 
+if ! hash pytest 2>/dev/null; then
+  pip3 install -r requirements.txt
+fi
+
 pytest -sv --tb=short
