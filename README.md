@@ -27,7 +27,7 @@ output/
 — page2.html
 ```
 
-If [`examples/simple/post1.txt`](`examples/simple/post1.txt`) contains
+In other words, for each of the original `.txt` files, a corresponding `.html` file should be created. If [`examples/simple/post1.txt`](`examples/simple/post1.txt`) contains
 
 ```
 Post 1 Title
@@ -56,7 +56,7 @@ then `output/post1.html` should look like
     1. The input directory
     1. The output directory
 * Given an input directory of plain text files, your script should convert each one to an HTML page the output directory.
-* The first line of each text file is the title, and the rest is the body.
+* The first line of each text file is the title, then there's an empty line, then the rest is the body.
 * The generated pages should use the provided [template HTML file](template.html), replacing the `{{title}}` and `{{body}}`.
 * If the output directory doesn't exist, create it and any missing parent directories (a.k.a. "recursively").
 
