@@ -16,7 +16,7 @@ def test_files():
         files.sort()
         assert files == ['postone.html', 'some-other-post.html']
 
-def test_content():
+def test_titles():
     with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
         subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
 
@@ -24,7 +24,20 @@ def test_content():
         files.sort()
 
         potst1path = os.path.join(tmpdirname, files[0])
-        check_content(potst1path, "Post One Title", "This is the body of Post One.")
+        check_title(potst1path, "Post One Title")
 
         otherpostpath = os.path.join(tmpdirname, files[1])
-        check_content(otherpostpath, "Some Other Post Title", "This is the body of the other post.")
+        check_title(otherpostpath, "Some Other Post Title")
+
+def test_bodies():
+    with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
+        subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
+
+        files = os.listdir(tmpdirname)
+        files.sort()
+
+        potst1path = os.path.join(tmpdirname, files[0])
+        check_body(potst1path, "This is the body of Post One.")
+
+        otherpostpath = os.path.join(tmpdirname, files[1])
+        check_body(otherpostpath, "This is the body of the other post.")
