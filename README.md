@@ -81,7 +81,7 @@ cd /vagrant/static
 # install dependencies
 pip3 install -r requirements.txt
 # run the "simple" tests (get these passing first)
-pytest -k simple
-# run all tests
-pytest
+pytest -v -k simple
+# run all tests (including randomized ones)
+pytest -v
 ```
