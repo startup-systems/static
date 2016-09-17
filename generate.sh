@@ -18,7 +18,7 @@ do
 	title=$(head -n 1 $file)
 	body=$(tail -n +3 $file)
 
-	filename=$(basename --suffix=".txt" $file) # strip file name of directory and extension
+	filename=$(basename -s ".txt" $file) # strip file name of directory and extension
 
 	#create the output file
 	touch "$output_dir/$filename.html"
