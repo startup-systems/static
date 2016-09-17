@@ -80,6 +80,8 @@ Inside your [virtual machine](https://github.com/startup-systems/vm):
 cd /vagrant/static
 # install dependencies
 pip3 install -r requirements.txt
-# run tests
+# run the "simple" tests (get these passing first)
+pytest -k simple
+# run all tests
 pytest
 ```
