@@ -78,5 +78,8 @@ Inside your [virtual machine](https://github.com/startup-systems/vm):
 
 ```bash
 cd /vagrant/static
-./bin/test
+# install dependencies
+pip3 install -r requirements.txt
+# run tests
+pytest
 ```
