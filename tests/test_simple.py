@@ -6,7 +6,7 @@ from helpers import *
 
 @pytest.fixture
 def output_dir():
-    with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
         subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
         yield tmpdirname
 
@@ -16,7 +16,7 @@ def get_files(path):
     return files
 
 def test_no_errors():
-    with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
         result = subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
         assert result.returncode == 0
 
