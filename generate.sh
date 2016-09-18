@@ -12,9 +12,15 @@ if [ ! -d "$output_dir" ]; then
   mkdir -p $output_dir
 fi
 
+if [ ! "${input_path: -1}" = "/" ]; then
+	input_path="$input_path/"
+fi
+
 # for each text file in input directory
 for file in "$input_path"*.txt
 do
+	file="$file"
+
 	title=$(head -n 1 $file)
 	body=$(tail -n +3 $file)
 
