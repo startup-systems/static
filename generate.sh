@@ -12,9 +12,9 @@ if [ -d "$1" ]; then
   #identify all files
   for file in $1/*.txt;
   do
-    title="$(head $file -n 1)"
-    body="$(tail $file -n 1)"
-    base="$(basename $file .txt)"
+    title="$(head "$file" -n 1)"
+    body="$(tail "$file" -n 1)"
+    base="$(basename "$file" .txt)"
     sed "s/{{title}}/$title/g;s/{{body}}/$body/g" template.html >> "$2/$base.html"
   done
 fi
