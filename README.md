@@ -1,6 +1,6 @@
 # Static Site Builder
 
-In this assignment, you are going to be creating a (simple) static site builder for blogs.
+In this assignment, you are going to be creating a (simple) static site builder for blogs, as a shell script.
 
 ## Example
 
