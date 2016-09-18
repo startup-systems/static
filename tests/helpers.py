@@ -2,6 +2,11 @@ from bs4 import BeautifulSoup
 import os
 import subprocess
 
+def get_files(path):
+    files = os.listdir(path)
+    files.sort()
+    return files
+
 def get_tag(path, selector):
     soup = BeautifulSoup(open(path), 'html.parser')
     return soup.find(selector)
