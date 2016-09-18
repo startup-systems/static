@@ -9,7 +9,7 @@ input_path=$1
 
 # check if directory exists (from https://stackoverflow.com/questions/59838/check-if-a-directory-exists-in-a-shell-script)
 if [ ! -d "$output_dir" ]; then
-  mkdir -p $output_dir
+  mkdir -p "$output_dir"
 fi
 
 if [ ! "${input_path: -1}" = "/" ]; then
@@ -21,10 +21,10 @@ for file in "$input_path"*.txt
 do
 	file="$file"
 
-	title=$(head -n 1 $file)
-	body=$(tail -n +3 $file)
+	title=$(head -n 1 "$file")
+	body=$(tail -n +3 "$file")
 
-	filename=$(basename -s ".txt" $file) # strip file name of directory and extension
+	filename=$(basename -s ".txt" "$file") # strip file name of directory and extension
 
 	#create the output file
 	touch "$output_dir/$filename.html"
