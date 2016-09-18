@@ -1,13 +1,16 @@
+import helpers
 import os
 import pytest
-import subprocess
 import tempfile
-from helpers import *
+
+def generate(dest):
+    input_dir = os.path.join('examples', 'simple')
+    return helpers.generate(input_dir, dest)
 
 @pytest.fixture
 def output_dir():
     with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
-        subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
+        generate(tmpdirname)
         yield tmpdirname
 
 def get_files(path):
@@ -17,7 +20,7 @@ def get_files(path):
 
 def test_no_errors():
     with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
-        result = subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
+        result = generate(tmpdirname)
         assert result.returncode == 0
 
 def test_files(output_dir):
@@ -28,16 +31,16 @@ def test_titles(output_dir):
     files = get_files(output_dir)
 
     potst1path = os.path.join(output_dir, files[0])
-    check_title(potst1path, "Post One Title")
+    helpers.check_title(potst1path, "Post One Title")
 
     otherpostpath = os.path.join(output_dir, files[1])
-    check_title(otherpostpath, "Some Other Post Title")
+    helpers.check_title(otherpostpath, "Some Other Post Title")
 
 def test_bodies(output_dir):
     files = get_files(output_dir)
 
     potst1path = os.path.join(output_dir, files[0])
-    check_body(potst1path, "This is the body of Post One.")
+    helpers.check_body(potst1path, "This is the body of Post One.")
 
     otherpostpath = os.path.join(output_dir, files[1])
-    check_body(otherpostpath, "This is the body of the other post.")
+    helpers.check_body(otherpostpath, "This is the body of the other post.")

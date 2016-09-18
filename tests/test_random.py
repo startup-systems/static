@@ -1,9 +1,8 @@
+import helpers
 import os
 import pytest
 import random
-import subprocess
 import tempfile
-from helpers import *
 
 class InputFile:
     def __init__(self, file_number):
@@ -47,7 +46,7 @@ def output_dir():
 @pytest.fixture
 def populated_output_dir(populated_input_dir, output_dir):
     print("DEBUG")
-    result = subprocess.run(['./generate.sh', populated_input_dir, output_dir])
+    result = helpers.generate(populated_input_dir, output_dir)
     assert result.returncode == 0
     yield output_dir
 
@@ -66,11 +65,11 @@ def test_titles(input_files, populated_output_dir):
 
     for input_file in input_files:
         path = os.path.join(populated_output_dir, "post{}.html".format(input_file.file_number))
-        check_title(path, input_file.title)
+        helpers.check_title(path, input_file.title)
 
 def test_bodies(input_files, populated_output_dir):
     output_files = get_files(populated_output_dir)
 
     for input_file in input_files:
         path = os.path.join(populated_output_dir, "post{}.html".format(input_file.file_number))
-        check_body(path, input_file.body)
+        helpers.check_body(path, input_file.body)
