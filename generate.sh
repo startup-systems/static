@@ -23,4 +23,3 @@ fi
 # http://stackoverflow.com/questions/59838/check-if-a-directory-exists-in-a-shell-script
 # http://stackoverflow.com/questions/26568952/how-to-replace-multiple-patterns-at-once-with-sed
 # http://stackoverflow.com/questions/965053/extract-filename-and-extension-in-bash
-Double quote to prevent globbing and word splitting.
