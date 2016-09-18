@@ -11,7 +11,7 @@ if [ ! -d "$2" ]; then
 	mkdir "$2"
 fi
 
-filelist=$1/*
+filelist="$1/*"
 
 for file in $filelist ; do
 	
@@ -20,7 +20,7 @@ for file in $filelist ; do
 	title=$(head -1 $file)
 	body=$(tail -1 $file)
 	
-	sed -e 's/{{title}}/'$title'/g' -e 's/{{body}}/'$body'/g' template.html >$html
+	sed -e 's/{{title}}/'"$title"'/g' -e 's/{{body}}/'"$body"'/g' template.html > $html
 	
 	mv $html $2
 done
