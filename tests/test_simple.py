@@ -44,3 +44,21 @@ def test_bodies(output_dir):
 
     otherpostpath = os.path.join(output_dir, files[1])
     helpers.check_body(otherpostpath, "This is the body of the other post.")
+
+def test_subdirectory_creation():
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
+        dest = os.path.join(tmpdirname, 'subdir')
+        result = generate(dest)
+        assert result.returncode == 0
+
+        files = get_files(dest)
+        assert files == ['postone.html', 'some-other-post.html']
+
+def test_recursive_directory_creation():
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
+        dest = os.path.join(tmpdirname, 'subdir', 'subsubdir')
+        result = generate(dest)
+        assert result.returncode == 0
+
+        files = get_files(dest)
+        assert files == ['postone.html', 'some-other-post.html']
