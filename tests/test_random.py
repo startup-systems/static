@@ -57,7 +57,7 @@ def get_files(path):
     return files
 
 def test_files(input_files, populated_output_dir):
-    input_filenames = [f.filename for f in input_files]
+    input_filenames = ["post{}.html".format(f.file_number) for f in input_files]
     output_filenames = get_files(populated_output_dir)
     assert output_filenames == input_filenames
 
