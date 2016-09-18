@@ -9,7 +9,7 @@
 # echo $NAME
 
 
-if [ $3 ]; then
+if [ "$3" ]; then
     echo "Too many arguments... "
     echo "Aborting operation" 
     echo "---- Usage Help ----"
@@ -18,7 +18,7 @@ if [ $3 ]; then
 fi
 
 
-if [ $1 ] && [ $2 ]; then
+if [ "$1" ] && [ "$2" ]; then
 	
     #Check if input directory exists
     if [ -d "$1" ]; then
@@ -41,18 +41,18 @@ if [ $1 ] && [ $2 ]; then
 		
 		
     echo "Creating output directory: $2"
-    mkdir -pv $2		
+    mkdir -pv "$2"		
 
 
     for file in "$1"/*.txt
     do
-	echo "parsing " ${file##*/}
+	echo "parsing  ${file##*/}"
 	fname=${file##*/}
 	fname=${fname%.*}
 	fname="$fname".html
 
 	#Create HTML files
-	echo "* creating "$fname
+	echo "-- creating $fname"
 	touch "$2"/"$fname"
 
 
