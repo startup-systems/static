@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -ex
+set -ex
 
 # YOUR CODE HERE
 if (( $# != 2 )); then
@@ -16,7 +16,7 @@ for f in "$1"/*.txt
 do
     echo parsering \file $(basename $f)
     let count=count+1
-    outfile="$2"/post$count.html
+    outfile="$2"/$(basename $f .txt).html
     sed "s/{{title}}/$(head -1 $f)/;s/{{body}}/$(tail -n +3 $f)/" ./template.html > $outfile
 done
 echo created $count files at $2
