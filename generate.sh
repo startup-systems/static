@@ -3,7 +3,7 @@ set -ex
 inputpath=$1
 outdir=$2
 if [ ! -d "$outdir" ]; then
-	mkdir -p $outdir
+	mkdir -p "$outdir"
 fi
 
 files=(`ls $1`)
