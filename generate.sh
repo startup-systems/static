@@ -19,5 +19,5 @@ do
   newfile=$outdir/$fname.html
   txttitle=$(head -n 1 "$file")
   txtbody=$(tail -n 1 "$file")
-  sed -e 's/{{title}}/'"$txttitle"'/g' -e 's#{{body}}#'"$txtbody"'#g' $tempfile > "$newfile"
+  sed -e 's/{{title}}/'"$txttitle"'/g' -e 's#{{body}}#'"$txtbody"'#g' template.html > "$newfile"
 done
