@@ -62,11 +62,14 @@ if [ "$1" ] && [ "$2" ]; then
 
 	#Copy content	
 	#cp template.html "$2"/"$fname"
-	sed  "s/{{title}}/$title/g"  template.html > "$2"/"$fname"
-	sed  -i.bak  "s/{{body}}/$body/g" "$2"/"$fname"
+	sed  "s/{{title}}/$title/g"  template.html > "$2"/"$fname".temp
+	sed  "s/{{body}}/$body/g"   "$2"/"$fname".temp  >  "$2"/"$fname"
 		
     done
-	rm "$2"/*.bak	
+	rm "$2"/*.temp
+	echo "--------------------------"
+	echo "HTML generation completed!"
+ 	echo "--------------------------"
 else
     echo "Arguments misssing... "
     echo "Aborting operation!"	
