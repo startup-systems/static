@@ -6,7 +6,7 @@ if [ ! -d "$outdir" ]; then
 	mkdir -p "$outdir"
 fi
 
-files=($(ls $1))
+files=($("ls" $1))
 numFiles=${#files[@]}
 
 for ((i=0; i < numFiles; i++)); do
