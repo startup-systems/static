@@ -4,7 +4,7 @@ set -ex
 
 # YOUR CODE HERE
 
-tempfile=template.html
+tempfile="template.html"
 
 indir="$1"
 outdir="$2"
