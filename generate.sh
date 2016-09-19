@@ -18,6 +18,6 @@ for file in $1/*.txt ; do
 	title=$(head -1 "$file")
 	body=$(tail -1 "$file")
 	
-	sed -e "s/{{title}}/$title/g" -e "s/{{body}}/$body/g" template.html > $2/$base.html
+	sed -e "s/{{title}}/$title/g" -e "s/{{body}}/$body/g" template.html > $2/$name.html
 	
 done
