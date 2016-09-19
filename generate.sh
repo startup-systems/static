@@ -11,7 +11,7 @@ populate_template() {
         title=$1
         body=$2
         html_template_filename="./template.html"
-        html_template=`sudo cat $html_template_filename`
+        html_template=`cat $html_template_filename`
         html_with_title=`sed -e "s/{{title}}/${title}/g" <<< $html_template`
         html=`sed -e "s/{{body}}/${body}/g" <<< $html_with_title`
         echo $html
@@ -21,10 +21,10 @@ populate_template() {
 if [ -d "$OUTPUT_DIRECTORY" ]; then
   # Control will enter here if $DIRECTORY exists.
         echo "Removing files from output directory"
-        `sudo rm -rf "$OUTPUT_DIRECTORY"/*`
+        `rm -rf "$OUTPUT_DIRECTORY"/*`
 else
         echo "Making output directory $OUTPUT_DIRECTORY"
-        `sudo mkdir -p $OUTPUT_DIRECTORY`
+        `mkdir -p $OUTPUT_DIRECTORY`
 fi
 
 # Iterate over the example articles
@@ -37,5 +37,5 @@ for txt_filepath in $INPUT_DIRECTORY/*; do
         txt_filename=`basename $txt_filepath`
         html_filename=`sed -e "s/txt/html/g" <<< $txt_filename`
         html_filepath=$OUTPUT_DIRECTORY'/'$html_filename
-        echo $html | sudo tee -a $html_filepath
+        echo $html | tee -a $html_filepath
 done
