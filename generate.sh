@@ -19,5 +19,5 @@ do
 	postBody="$(tail -n +3 "$file" | tr "\n" "\a")"
 
 	# insert template contents (use sed to swap out title and body, then tr to swap out \a's with new lines)
-	echo "$(cat "template.html" | sed "s/{{title}}/$postTitle/g" | sed "s|{{body}}|$postBody|" | tr "\a" "\n")" > $OUTPUT_DESTINATION/$(basename $file .txt).html
+	cat "template.html" | sed "s/{{title}}/$postTitle/g" | sed "s|{{body}}|$postBody|" | tr "\a" "\n" > $OUTPUT_DESTINATION/$(basename $file .txt).html
 done
