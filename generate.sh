@@ -10,7 +10,7 @@ OUTPUT_DESTINATION=$2
 mkdir -p "$OUTPUT_DESTINATION"
 
 # loop through files ending in .txt in new output folder structure
-for file in $(find "$INPUT_SOURCE" -type f -name "*.txt")
+for file in $INPUT_SOURCE/*.txt
 do
 	# grab first line of file
 	postTitle=$(head -n 1 "$file")
