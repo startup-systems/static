@@ -17,7 +17,7 @@ for file in $indir ;
 do
   fname="$(basename "$file" .txt)"
   newfile="$outdir$fname.html"
-  txttitle="$(head -1 "$file")"
-  txtbody="$(tail -1 "$file")"
-  sed -e 's/{{title}}/'"$txttitle"'/g' -e 's#{{body}}#'"$txtbody"'#g' "$tempfile" > "$newfile"
+  txttitle="$(head -n 1 "$file")"
+  txtbody="$(tail -n 1 "$file")"
+  sed -e 's/{{title}}/'"$txttitle"'/g' -e 's#{{body}}#'"$txtbody"'#g' template.html > "$newfile"
 done
