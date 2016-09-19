@@ -1,21 +1,21 @@
 #!/bin/bash
 set -ex
-base=`pwd`
+inputpath=$1
 outdir=$2
 if [ ! -d "$outdir" ]; then
-	mkdir ./$outdir
+	mkdir -p $outdir
 fi
 
-cd $1
-files=(`ls .`)
+files=(`ls $1`)
 numFiles=${#files[@]}
 
-cd $outdir
 for ((i=0; i< $numFiles; i++)); do
-	cat $base/template.html > $outdir/post${i}.html
-	subtopic=`head -n 1 $base/$1/${files[i-1]}`
-	subbody=`tail -n 1 $base/$1/${files[i-1]}`
-	sed -i "s/{{title}}/$subtopic/g" post${i}.html
-	sed -i "s/{{body}}/$subbody/g" post${i}.html
+	outfile=$(basename ${files[i]})
+	outfile=${outfile%.*}
+	cat template.html > $outdir/$outfile.html
+	subtopic=`head -n 1 $inputpath/${files[i]}`
+	subbody=`tail -n 1 $inputpath/${files[i]}`
+	sed -i "s/{{title}}/$subtopic/g" $outdir/$outfile.html
+	sed -i "s/{{body}}/$subbody/g" $outdir/$outfile.html
 done
 
