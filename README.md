@@ -66,8 +66,36 @@ Fill in the [`generate.sh`](generate.sh) shell script with your code. You should
 
 Too easy? Try the following:
 
-* Any URLs should be hyperlinked.
-    * For example, `https://someurl.com/somepath` should turn into `<a href="https://someurl.com/somepath">https://someurl.com/somepath</a>`.
+* Any URLs should be hyperlinked. For example:
+
+    ```
+    https://someurl.com/somepath
+    ```
+
+    anywhere in the body should turn into
+
+    ```html
+    <a href="https://someurl.com/somepath">https://someurl.com/somepath</a>
+    ```
+
+* Any blank lines followed by more content should create a new paragraph. For example:
+
+    ```
+    Some text.
+
+    Some more text.
+    ```
+
+    in the body should turn into
+
+    ```html
+    <p>
+      Some text.
+    </p>
+    <p>
+      Some more text.
+    </p>
+    ```
 
 ## Things you might need
 

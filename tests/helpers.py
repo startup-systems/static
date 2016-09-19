@@ -30,5 +30,4 @@ def check_body(path, expected_body):
 
 def generate(source, dest):
     script = os.path.join('.', 'generate.sh')
-    input_dir = os.path.join('examples', 'simple')
     return subprocess.run([script, source, dest])
