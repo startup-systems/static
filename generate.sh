@@ -11,16 +11,13 @@ if [ ! -d "$2" ]; then
 	mkdir "$2"
 fi
 
-filelist="$1/*"
+for file in $1/*.txt ; do
+	
+	name="$(basename "$file" .txt)"
 
-for file in $filelist ; do
+	title=$(head -1 "$file")
+	body=$(tail -1 "$file")
 	
-	html=$(echo $file | sed 's/\.txt$/\.html/i')
-
-	title=$(head -1 $file)
-	body=$(tail -1 $file)
+	sed -e "s/{{title}}/$title/g" -e "s/{{body}}/$body/g" template.html > $2/$base.html
 	
-	sed -e 's/{{title}}/'"$title"'/g' -e 's/{{body}}/'"$body"'/g' template.html > $html
-	
-	mv $html $2
 done
