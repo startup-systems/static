@@ -14,9 +14,9 @@ count=0
 mkdir -p "$2"
 for f in "$1"/*.txt
 do
-    echo parsering file $(basename "$f")
+    echo parsering file "$(basename "$f")"
     let count=count+1
     outfile="$2"/$(basename "$f" .txt).html
     sed "s/{{title}}/$(head -1 "$f")/;s/{{body}}/$(tail -n +3 "$f")/" ./template.html > $outfile
 done
-echo created $count files at $2
+echo created "$count" files at $2
