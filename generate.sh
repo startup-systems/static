@@ -3,13 +3,13 @@ set -ex
 
 # YOUR CODE HERE
 ##set file location to be 1st input argument
-inputdir="$1/*"
+inputdir="$1*"
 ## take 2nd argument as the output direcotry
 outputdir=$2
 
 ##check if the output directory is exists or not, and make one if not
 if [ ! -d "$outputdir" ]; then
-  mkdir "$outputdir"
+  mkdir -p "$outputdir"
 fi
 
 ##loop through the files in input directory
@@ -20,6 +20,18 @@ do
   filename=$(basename "$file" .txt)
   newfile=$filename.html
   titlesub=$(head -1 "$file")
-  bodysub=$(tail -1 "$file")
-  sed -e 's/{{title}}/'"$titlesub"'/g' -e 's/{{body}}/'"$bodysub"'/g' template.html > "$outputdir/$newfile"
-done
+  bodysub=$(tail -n +3 "$file")
+
+  linenumber=$(wc -l "$file" | awk '{print $1'})
+  if [[  "$linenumber"  -gt  3 ]]; then 
+  	  ##bodysubnoblank=$(tail -n +2 "$file" | grep . )
+
+  	  bodysub="$(tail -n +2 "$file" | grep . | sed -e 's/^/'"<p>"'/g' -e 's#$#'"</p>"'#g')"
+  	  bodysub="$(echo $bodysub)"
+  	  # bodysubnoblank="$(echo $bodysubnoblank | sed 's#"<p></p>"#""#g')"
+  	  # bodysubnoblank="$(echo $bodysubnoblank | sed 's/^/"<p>"/g')"
+  	  # bodysubnoblank="$(echo $bodysubnoblank | sed 's#$#'"</p>"'#g')"
+  fi
+
+  sed -e 's/{{title}}/'"$titlesub"'/g' -e 's#{{body}}#'"$bodysub"'#g' template.html > "$outputdir/$newfile"
+ done
