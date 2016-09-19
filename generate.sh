@@ -22,10 +22,9 @@ do
   titlesub=$(head -1 "$file")
   bodysub=$(tail -n +3 "$file")
 
-  linenumber=$(wc -l "$file" | awk '{print $1'})
+  linenumber=$(wc -l "$file" | awk '{print $1}')
   if [[  "$linenumber"  -gt  3 ]]; then 
-  	  bodysub="$(tail -n +2 "$file" | grep . | sed -e 's/^/'"<p>"'/g' -e 's#$#'"</p>"'#g')"
-  	  bodysub="$(echo $bodysub)"
+  	  bodysub="$(tail -n +2 "$file" | grep . | sed -e 's/^/'"<p>"'/g' -e 's#$#'"</p>"'#g' |tr '\n' ' ')"
   fi
 
   sed -e 's/{{title}}/'"$titlesub"'/g' -e 's#{{body}}#'"$bodysub"'#g' template.html > "$outputdir/$newfile"
