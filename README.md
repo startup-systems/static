@@ -59,6 +59,8 @@ then `output/postone.html` should look like
 * The first line of each text file is the title, then there's an empty line, then the rest is the body.
 * The generated pages should use the provided [template HTML file](template.html), replacing the `{{title}}` and `{{body}}`.
 * If the output directory doesn't exist, create it and any missing parent directories (a.k.a. "recursively").
+* All of the tests + Code Climate checks should pass.
+    * `xfail` and `XPASS` correspond to the tests for the extra credit, so don't worry about them otherwise.
 
 Fill in the [`generate.sh`](generate.sh) shell script with your code. You should not need to modify any other files.
 
