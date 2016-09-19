@@ -24,7 +24,7 @@ if [ -d "$OUTPUT_DIRECTORY" ]; then
         rm -rf "${OUTPUT_DIRECTORY:?}"/*
 else
         echo "Making output directory $OUTPUT_DIRECTORY"
-        mkdir -p $OUTPUT_DIRECTORY
+        mkdir -p "$OUTPUT_DIRECTORY"
 fi
 
 # Iterate over the example articles
@@ -34,8 +34,8 @@ for txt_filepath in $INPUT_DIRECTORY/*; do
         title=$(echo "$text" | head -n 1)
         body=$(echo "$text" | tail -1)
 	html=$(populate_template "$title" "$body")
-        txt_filename=$(basename $txt_filepath)
-        html_filename=$(sed -e "s/txt/html/g" <<< $txt_filename)
+        txt_filename=$(basename "$txt_filepath")
+        html_filename=$(sed -e "s/txt/html/g" <<< "$txt_filename")
         html_filepath=$OUTPUT_DIRECTORY'/'$html_filename
-        echo "$html" | tee -a $html_filepath
+        echo "$html" | tee -a "$html_filepath"
 done
