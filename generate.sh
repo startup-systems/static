@@ -20,7 +20,7 @@ fi
 
 if [ ! -d "$destination" ]
 then
-  mkdir "$destination"
+  mkdir -p "$destination"
 fi
 
 listfiles=$( ls "$src" )
