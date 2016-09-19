@@ -11,10 +11,12 @@ cd "$2"
 OUTPUTDIR=$(pwd)
 cd -
 
-cd $INPUTDIR
+cd "$INPUTDIR"
+# shellcheck disable=SC2059
 rsync -Rv $(find . -name '*.txt') "$OUTPUTDIR"
-cd $STARTDIR
+cd "$STARTDIR"
 
+# shellcheck disable=SC2059
 for FILENAME in $(find "$OUTPUTDIR" -name '*.txt'); do
 	cat template.html > "$FILENAME.html"
 	TITLE=$(head -n 1 "$FILENAME")
@@ -25,6 +27,7 @@ for FILENAME in $(find "$OUTPUTDIR" -name '*.txt'); do
 	sed -i.bak "s/\\//\\\\\//g" tmp_body
 	#sed -i.bak "s/\\r/\\\\\r/g" tmp_body
 	BODY=$(cat tmp_body)
+	# shellcheck disable=SC2059
 	echo $BODY > tmp_body
 	BODY=$(cat tmp_body)
 	rm tmp_body
