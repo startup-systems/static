@@ -32,7 +32,7 @@ for file in $inputFolder*; do
 
     cp template.html ${outputFolder}${baseFileName}.html
     
-    sed -i 0 -e "s/{{title}}/${title/g" -e "s/{{body}}/$body/g" ${outputFolder}${baseFileName}.html
+    sed -i 0 -e "s/{{title}}/$title/g" -e "s/{{body}}/$body/g" ${outputFolder}${baseFileName}.html
 
     rm "${outputFolder}${baseFileName}.html0"
 done
