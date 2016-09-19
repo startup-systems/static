@@ -37,5 +37,5 @@ for txt_filepath in $INPUT_DIRECTORY/*; do
         txt_filename=`basename $txt_filepath`
         html_filename=`sed -e "s/txt/html/g" <<< $txt_filename`
         html_filepath=$OUTPUT_DIRECTORY'/'$html_filename
-        echo $html | tee -a $html_filepath
+        echo "$html" | tee -a $html_filepath
 done
