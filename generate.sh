@@ -2,8 +2,9 @@
 
 set -ex
 
-if [ ! -d "$2" ]; then
- mkdir "$2"
+output="$2"
+if [ ! -d "$output" ]; then
+ mkdir "$output"
 fi
 
 input="$1/*"
