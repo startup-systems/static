@@ -10,7 +10,7 @@ indir=$1
 outdir=$2
 
 if [ ! -d "$outdir" ]; then
-  mkdir $outdir
+  mkdir "$outdir"
 fi
 
 for file in "$indir"/*
