@@ -31,7 +31,7 @@ fi
 for txt_filepath in $INPUT_DIRECTORY/*; do
         text=$(cat "$txt_filepath")
         title=$(echo "$text" | head -n 1)
-        body=$(echo "$text" | tail -1)
+        body=$(echo "$text" | tail -n +3)
 	html=$(populate_template "$title" "$body")
         txt_filename=$(basename "$txt_filepath")
         html_filename=$(sed -e "s/txt/html/g" <<< "$txt_filename")
