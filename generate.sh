@@ -4,7 +4,7 @@ set -ex
 
 output="$2"
 if [ ! -d "$output" ]; then
- mkdir "$output"
+ mkdir -p "$output"
 fi
 
 input="$1/*"
