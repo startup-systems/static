@@ -18,6 +18,9 @@ do
 	# grab rest of file, replacing new lines with \a character
 	postBody="$(tail -n +3 "$file" | tr "\n" "\a")"
 
+	# swap for extra credit
+	# postBodyEdited="$(tail -n +3 "$file" | tr "\n" "\a")"
+
 	# insert template contents (use sed to swap out title and body, then tr to swap out \a's with new lines)
 	sed "s/{{title}}/$postTitle/g" "template.html" | sed "s|{{body}}|$postBody|" | tr "\a" "\n" > $OUTPUT_DESTINATION/$(basename $file .txt).html
 done
