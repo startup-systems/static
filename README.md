@@ -1,6 +1,6 @@
 # Static Site Builder
 
-In this assignment, you are going to be creating a (simple) static site builder for blogs.
+In this assignment, you are going to be creating a (simple) static site builder for blogs, as a shell script.
 
 ## Example
 
@@ -55,12 +55,49 @@ then `output/postone.html` should look like
 * The script takes two arguments:
     1. The input directory
     1. The output directory
-* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory. It should work with any number of input files, with any arbitrary names.
+* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory. It should work with any number of input files, in any directory, with any arbitrary names.
 * The first line of each text file is the title, then there's an empty line, then the rest is the body.
 * The generated pages should use the provided [template HTML file](template.html), replacing the `{{title}}` and `{{body}}`.
 * If the output directory doesn't exist, create it and any missing parent directories (a.k.a. "recursively").
+* All of the tests + Code Climate checks should pass.
+    * `xfail` and `XPASS` correspond to the tests for the extra credit, so don't worry about them otherwise.
 
 Fill in the [`generate.sh`](generate.sh) shell script with your code. You should not need to modify any other files.
+
+### Extra credit
+
+Too easy? Try the following:
+
+* Any URLs should be hyperlinked. For example:
+
+    ```
+    https://someurl.com/somepath
+    ```
+
+    anywhere in the body should turn into
+
+    ```html
+    <a href="https://someurl.com/somepath">https://someurl.com/somepath</a>
+    ```
+
+* Any blank lines followed by more content should create a new paragraph. For example:
+
+    ```
+    Some text.
+
+    Some more text.
+    ```
+
+    in the body should turn into
+
+    ```html
+    <p>
+      Some text.
+    </p>
+    <p>
+      Some more text.
+    </p>
+    ```
 
 ## Things you might need
 
@@ -80,8 +117,13 @@ Inside your [virtual machine](https://github.com/startup-systems/vm):
 cd /vagrant/static
 # install dependencies
 pip3 install -r requirements.txt
+
 # run the "simple" tests (get these passing first)
 pytest -v -k simple
-# run all tests (including randomized ones)
+# run all required tests (including randomized ones)
 pytest -v
+# run all tests, including extra credit ones
+pytest --runxfail -v
 ```
+
+[More info about pytest.](http://doc.pytest.org/)
