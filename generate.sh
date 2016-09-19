@@ -26,11 +26,10 @@ fi
 listfiles=$( ls "$src" )
 for i in $listfiles
 do
-  name=$( basename "$i" )
-  name="${name%.*}"
+  name=$( basename "$i" .txt )
   title=$( head -n 1 "$src/$i" )
   content=$( tail -n +3 "$src/$i" )
-  sed "s/{{title}}/$title/g" < ./template.html | sed "s/{{body}}/$content/g" >> "$destination$name.html"
+  sed "s/{{title}}/$title/g" < ./template.html | sed "s/{{body}}/$content/g" >> "$destination/$name.html"
 
 done
 
