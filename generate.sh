@@ -3,7 +3,7 @@
 set -ex
 
 # YOUR CODE HERE
-indir="$1*"
+indir="$1"
 outdir=$2
 
 if [ ! -d "$outdir" ]; then
@@ -11,10 +11,10 @@ if [ ! -d "$outdir" ]; then
 fi
 
 
-for file in $indir
+for file in "$indir"/*
 do
-  filename=$(basename "$file" .txt)
-  newfile=$filename.html
+  fname=$(basename "$file" .txt)
+  newfile=$fname.html
   titlesub=$(head -1 "$file")
   bodysub=$(tail -n 1 "$file")
 
