@@ -35,7 +35,7 @@ for txt_filepath in $INPUT_DIRECTORY/*; do
         body=`echo "$text" | tail -1`
 	html=$(populate_template "$title" "$body")
         txt_filename=`basename $txt_filepath`
-        html_filename=`sed -e "s/txt/html/g" <<< $txt_filename`
+        html_filename=$(sed -e "s/txt/html/g" <<< $txt_filename)
         html_filepath=$OUTPUT_DIRECTORY'/'$html_filename
         echo "$html" | tee -a $html_filepath
 done
