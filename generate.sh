@@ -17,6 +17,6 @@ do
     echo parsering file "$(basename "$f")"
     let count=count+1
     outfile="$2"/$(basename "$f" .txt).html
-    sed "s/{{title}}/"$(head -1 "$f")"/;s/{{body}}/"$(tail -n 1 "$f")"/" ./template.html > $outfile
+    sed "s/{{title}}/\"$(head -1 "$f")\"/;s/{{body}}/\"$(tail -n 1 "$f")\"/" ./template.html > $outfile
 done
 echo created "$count" files at "$2"
