@@ -14,7 +14,7 @@ fi
 
 for file in $inputFolder*; do
     fullFilePath=$file
-    baseFileName='basename $fullFilePath'
+    baseFileName=$(basename $fullFilePath)
     baseFileName='echo $baseFileName | cut -f 1 -d .'
 
     title=''
