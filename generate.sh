@@ -11,9 +11,9 @@ populate_template() {
         title=$1
         body=$2
         html_template_filename="./template.html"
-        html_template=`cat $html_template_filename`
-        html_with_title=`sed -e "s/{{title}}/${title}/g" <<< $html_template`
-        html=`sed -e "s/{{body}}/${body}/g" <<< $html_with_title`
+        html_template=$(cat $html_template_filename)
+        html_with_title=$(sed -e "s/{{title}}/${title}/g" <<< $html_template)
+        html=$(sed -e "s/{{body}}/${body}/g" <<< $html_with_title)
         echo "$html"
 }
 
@@ -30,11 +30,11 @@ fi
 # Iterate over the example articles
 for txt_filepath in $INPUT_DIRECTORY/*; do
 	echo $txt_filepath
-        text=`cat $txt_filepath`
-        title=`echo "$text" | head -n 1`
-        body=`echo "$text" | tail -1`
+        text=$(cat $txt_filepath)
+        title=$(echo "$text" | head -n 1)
+        body=$(echo "$text" | tail -1)
 	html=$(populate_template "$title" "$body")
-        txt_filename=`basename $txt_filepath`
+        txt_filename=$(basename $txt_filepath)
         html_filename=$(sed -e "s/txt/html/g" <<< $txt_filename)
         html_filepath=$OUTPUT_DIRECTORY'/'$html_filename
         echo "$html" | tee -a $html_filepath
