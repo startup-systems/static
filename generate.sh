@@ -12,12 +12,14 @@ OUTPUTDIR=$(pwd)
 cd -
 
 cd "$INPUTDIR"
-# shellcheck disable=SC2059
-rsync -Rv $(find . -name '*.txt') "$OUTPUTDIR"
+find . -name '*.txt' > tmp_filelist
+rsync -Rv --files-from=tmp_filelist . "$OUTPUTDIR"
+rm tmp_filelist
 cd "$STARTDIR"
 
-# shellcheck disable=SC2059
-for FILENAME in $(find "$OUTPUTDIR" -name '*.txt'); do
+#for FILENAME in $(find "$OUTPUTDIR" -name '*.txt'); do
+find "$OUTPUTDIR" -name '*.txt' > tmp_filelist.txt
+while IFS='' read -r FILENAME || [[ -n "$FILENAME" ]]; do
 	cat template.html > "$FILENAME.html"
 	TITLE=$(head -n 1 "$FILENAME")
 	BODY=$(tail -n +3 "$FILENAME")
@@ -25,10 +27,12 @@ for FILENAME in $(find "$OUTPUTDIR" -name '*.txt'); do
 	sed -i.bak "s/^[^< ].*/<p>&<\/p>/g" tmp_body
 	sed -i.bak "s/\\\/\\\\\\\\/g" tmp_body
 	sed -i.bak "s/\\//\\\\\//g" tmp_body
-	#sed -i.bak "s/\\r/\\\\\r/g" tmp_body
+	
+	TMP=$(tr -d '\n' < tmp_body)
+	echo "$TMP" > tmp_body
+
 	BODY=$(cat tmp_body)
-	# shellcheck disable=SC2059
-	echo $BODY > tmp_body
+	echo "$BODY" > tmp_body
 	BODY=$(cat tmp_body)
 	rm tmp_body
 	rm tmp_body.bak
@@ -38,7 +42,7 @@ for FILENAME in $(find "$OUTPUTDIR" -name '*.txt'); do
 
 	sed -i.bak "s/https*:\/\/[^.]*\.[^ \r\n\.]*/<a href=\"&\">&<\/a>/g" "$FILENAME.html"
 
-	sed -i.bak "s/<\\/p> /&\n/g" "$FILENAME.html"
+	sed -i.bak "s/\(<\\/p>\)</\1\n</g" "$FILENAME.html"
 
 	sed -i.bak "s/<\\/p>/\n&/g" "$FILENAME.html"
 
@@ -46,6 +50,7 @@ for FILENAME in $(find "$OUTPUTDIR" -name '*.txt'); do
 
 	rm "$FILENAME"
 	rm "$FILENAME.html.bak"	
-done
+done < tmp_filelist.txt
+rm tmp_filelist.txt
 
 find "$OUTPUTDIR" -name '*.txt.html' -exec bash -c 'mv "$1" "${1%.txt.html}".html' - '{}' \;
