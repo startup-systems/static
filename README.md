@@ -62,6 +62,13 @@ then `output/postone.html` should look like
 
 Fill in the [`generate.sh`](generate.sh) shell script with your code. You should not need to modify any other files.
 
+### Extra credit
+
+Too easy? Try the following:
+
+* Any URLs should be hyperlinked.
+    * For example, `https://someurl.com/somepath` should turn into `<a href="https://someurl.com/somepath">https://someurl.com/somepath</a>`.
+
 ## Things you might need
 
 * Loop(s)
@@ -80,8 +87,13 @@ Inside your [virtual machine](https://github.com/startup-systems/vm):
 cd /vagrant/static
 # install dependencies
 pip3 install -r requirements.txt
+
 # run the "simple" tests (get these passing first)
 pytest -v -k simple
-# run all tests (including randomized ones)
+# run all required tests (including randomized ones)
 pytest -v
+# run all tests, including extra credit ones
+pytest --runxfail -v
 ```
+
+[More info about pytest.](http://doc.pytest.org/)
