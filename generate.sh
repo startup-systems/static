@@ -14,17 +14,17 @@ populate_template() {
         html_template=`cat $html_template_filename`
         html_with_title=`sed -e "s/{{title}}/${title}/g" <<< $html_template`
         html=`sed -e "s/{{body}}/${body}/g" <<< $html_with_title`
-        echo $html
+        echo "$html"
 }
 
 # Prepare the output directory
 if [ -d "$OUTPUT_DIRECTORY" ]; then
   # Control will enter here if $DIRECTORY exists.
         echo "Removing files from output directory"
-        `rm -rf "$OUTPUT_DIRECTORY"/*`
+        rm -rf "${OUTPUT_DIRECTORY:?}"/*
 else
         echo "Making output directory $OUTPUT_DIRECTORY"
-        `mkdir -p $OUTPUT_DIRECTORY`
+        mkdir -p $OUTPUT_DIRECTORY
 fi
 
 # Iterate over the example articles
