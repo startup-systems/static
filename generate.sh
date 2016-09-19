@@ -7,10 +7,10 @@ INPUT_SOURCE=$1
 OUTPUT_DESTINATION=$2
 
 # recursively creates folder structure for output
-mkdir -p $OUTPUT_DESTINATION
+mkdir -p "$OUTPUT_DESTINATION"
 
 # loop through files ending in .txt in new output folder structure
-for file in $(find $INPUT_SOURCE -type f -name "*.txt")
+for file in $(find "$INPUT_SOURCE" -type f -name "*.txt")
 do
 	# grab first line of file
 	postTitle=$(head -n 1 $file)
