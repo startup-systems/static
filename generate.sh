@@ -6,8 +6,8 @@ set -ex
 
 tempfile=template.html
 
-indir=$1
-outdir=$2
+indir="$1"
+outdir="$2"
 
 if [ ! -d "$outdir" ]; then
   mkdir "$outdir"
