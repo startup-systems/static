@@ -11,7 +11,7 @@ files=(`ls .`)
 numFiles=${#files[@]}
 
 cd $outdir
-for ((i=1; i< $numFiles+1; i++)); do
+for ((i=0; i< $numFiles; i++)); do
 	cat $base/template.html > $outdir/post${i}.html
 	subtopic=`head -n 1 $base/$1/${files[i-1]}`
 	subbody=`tail -n 1 $base/$1/${files[i-1]}`
