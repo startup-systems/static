@@ -25,7 +25,7 @@ fi
     body=""
     numLines=$(wc -l < "$file")
 
-    if [ $numLines -gt 3 ]; then
+    if [ "$numLines" -gt 3 ]; then
         while IFS= read -r line; do
 
             if [ $COUNTER -gt 1 ]; then
