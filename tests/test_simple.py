@@ -1,30 +1,59 @@
+import helpers
 import os
-import subprocess
+import pytest
 import tempfile
-from helpers import *
+
+def generate(dest):
+    input_dir = os.path.join('examples', 'simple')
+    return helpers.generate(input_dir, dest)
+
+@pytest.fixture
+def output_dir():
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
+        generate(tmpdirname)
+        yield tmpdirname
 
 def test_no_errors():
-    with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
-        result = subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
+        result = generate(tmpdirname)
         assert result.returncode == 0
 
-def test_files():
-    with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
-        subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
+def test_files(output_dir):
+    files = helpers.get_files(output_dir)
+    assert files == ['postone.html', 'some-other-post.html']
 
-        files = os.listdir(tmpdirname)
-        files.sort()
-        assert files == ['post1.html', 'post2.html']
+def test_titles(output_dir):
+    files = helpers.get_files(output_dir)
 
-def test_content():
-    with tempfile.TemporaryDirectory(suffix='static') as tmpdirname:
-        subprocess.run(['./generate.sh', 'examples/simple/', tmpdirname])
+    potst1path = os.path.join(output_dir, files[0])
+    helpers.check_title(potst1path, "Post One Title")
 
-        files = os.listdir(tmpdirname)
-        files.sort()
+    otherpostpath = os.path.join(output_dir, files[1])
+    helpers.check_title(otherpostpath, "Some Other Post Title")
 
-        potst1path = os.path.join(tmpdirname, files[0])
-        check_content(potst1path, "Post 1 Title", "This is the body of Post 1.")
+def test_bodies(output_dir):
+    files = helpers.get_files(output_dir)
 
-        post2path = os.path.join(tmpdirname, files[1])
-        check_content(post2path, "Post 2 Title", "This is the body of Post 2.")
+    potst1path = os.path.join(output_dir, files[0])
+    helpers.check_body_text(potst1path, "This is the body of Post One.")
+
+    otherpostpath = os.path.join(output_dir, files[1])
+    helpers.check_body_text(otherpostpath, "This is the body of the other post.")
+
+def test_subdirectory_creation():
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
+        dest = os.path.join(tmpdirname, 'subdir')
+        result = generate(dest)
+        assert result.returncode == 0
+
+        files = helpers.get_files(dest)
+        assert files == ['postone.html', 'some-other-post.html']
+
+def test_recursive_directory_creation():
+    with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
+        dest = os.path.join(tmpdirname, 'subdir', 'subsubdir')
+        result = generate(dest)
+        assert result.returncode == 0
+
+        files = helpers.get_files(dest)
+        assert files == ['postone.html', 'some-other-post.html']

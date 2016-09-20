@@ -1,6 +1,6 @@
 # Static Site Builder
 
-In this assignment, you are going to be creating a (simple) static site builder for blogs.
+In this assignment, you are going to be creating a (simple) static site builder for blogs, as a shell script.
 
 ## Example
 
@@ -9,8 +9,8 @@ Given the [`examples/simple/`](examples/simple/) as the input, which looks like 
 ```
 examples/
 — simple/
-  — page1.txt
-  — page2.txt
+  — postone.txt
+  — some-other-post.txt
 ```
 
 running the following:
@@ -23,11 +23,11 @@ should create:
 
 ```
 output/
-— page1.html
-— page2.html
+— postone.html
+— some-other-post.html
 ```
 
-If [`examples/simple/post1.txt`](`examples/simple/post1.txt`) contains
+In other words, for each of the original `.txt` files, a corresponding `.html` file should be created. If [`examples/simple/postone.txt`](`examples/simple/postone.txt`) contains
 
 ```
 Post 1 Title
@@ -35,7 +35,7 @@ Post 1 Title
 This is the body of Post 1.
 ```
 
-then `output/post1.html` should look like
+then `output/postone.html` should look like
 
 ```html
 <!DOCTYPE html>
@@ -55,12 +55,49 @@ then `output/post1.html` should look like
 * The script takes two arguments:
     1. The input directory
     1. The output directory
-* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory.
-* The first line of each text file is the title, and the rest is the body.
+* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory. It should work with any number of input files, in any directory, with any arbitrary names.
+* The first line of each text file is the title, then there's an empty line, then the rest is the body.
 * The generated pages should use the provided [template HTML file](template.html), replacing the `{{title}}` and `{{body}}`.
 * If the output directory doesn't exist, create it and any missing parent directories (a.k.a. "recursively").
+* All of the tests + Code Climate checks should pass.
+    * `xfail` and `XPASS` correspond to the tests for the extra credit, so don't worry about them otherwise.
 
 Fill in the [`generate.sh`](generate.sh) shell script with your code. You should not need to modify any other files.
+
+### Extra credit
+
+Too easy? Try the following:
+
+* Any URLs should be hyperlinked. For example:
+
+    ```
+    https://someurl.com/somepath
+    ```
+
+    anywhere in the body should turn into
+
+    ```html
+    <a href="https://someurl.com/somepath">https://someurl.com/somepath</a>
+    ```
+
+* Any blank lines followed by more content should create a new paragraph. For example:
+
+    ```
+    Some text.
+
+    Some more text.
+    ```
+
+    in the body should turn into
+
+    ```html
+    <p>
+      Some text.
+    </p>
+    <p>
+      Some more text.
+    </p>
+    ```
 
 ## Things you might need
 
@@ -74,12 +111,28 @@ Fill in the [`generate.sh`](generate.sh) shell script with your code. You should
 
 ## Run tests locally
 
-Inside your [virtual machine](https://docs.google.com/document/d/1sQALBnjr2j0i2Fo2e9hm-4z4x4KiEYdMOZFPE1MH4DM/edit):
+Inside your [virtual machine](https://github.com/startup-systems/vm):
 
 ```bash
-cd path/to/this/repository/
+cd /vagrant/static
 # install dependencies
-pip install -r requirements.txt
-# run tests
-./bin/test
+pip3 install -r requirements.txt
+
+# run the "simple" tests (get these passing first)
+pytest -v -k simple
+# run all required tests (including randomized ones)
+pytest -v
+# run all tests, including extra credit ones
+pytest --runxfail -v
+
+# run the Code Climate checks locally
+sudo apt update
+sudo apt install shellcheck
+shellcheck generate.sh
+# if it doesn't print anything, you're good to go!
 ```
+
+More info:
+
+* [pytest](http://doc.pytest.org/)
+* [ShellCheck](https://www.shellcheck.net/)
