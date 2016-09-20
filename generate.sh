@@ -8,6 +8,7 @@ DST=$2
 
 if [ ! -d "$DST" ]; then
 	mkdir "$DST"
+fi
 
 for filename in $SRC/*.txt
 do
