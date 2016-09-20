@@ -12,9 +12,9 @@ file_input="$1/*"
 
 for files in $file_input
 do
-output_name=$(basename "$files" .txt).html
-# new_name=$output_name.html
+output_name=$(basename "$files" .txt)
+new_name=$output_name.html
 title=$(head -1 "$files")
 content=$(tail -n +3 "$files")
-sed -e 's/{{title}}/'"$title"'/g' -e 's#{{body}}#'"$content"'#g' template.html > "$file_output/$output_name"
+sed -e 's/{{title}}/'"$title"'/g' -e 's#{{body}}#'"$content"'#g' template.html > "$file_output/$new_name"
 done
