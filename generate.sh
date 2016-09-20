@@ -11,7 +11,7 @@ function html() {
     BODY=$(sed ':a;N;$!ba;s/\n\+/<\/p><p>/g' <<< "$BODY")
     BODY=$(sed 's/$/<\/p>/g' <<< "$BODY")
     # URL formatting
-    BODY=$(sed 's/\(https\?[^ <]*.com\(\/[^ <\.]*\)\?\)/<a href="\1">\1<\/a>/g' <<< $BODY)
+    BODY=$(sed 's/\(https\?[^ <]*.com\(\/[^ <\.]*\)\?\)/<a href="\1">\1<\/a>/g' <<< "$BODY")
     # Save html
     sed -e "s@{{title}}@$TITLE@g; s@{{body}}@$BODY@g" "$(pwd)"/template.html > "$FILENAME"
 }
