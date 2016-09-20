@@ -14,13 +14,13 @@ function wt_file(){
 	echo -e "<!DOCTYPE html>"
 	echo -e "<html>"
 	echo -e "	<head>"
-  	echo -e "		<meta charset="utf-8">"   	
+  	echo -e "		<meta charset=\"utf-8\">"   	
 	echo -e "		<title>"
-	sed -n '1p' ${file_in}
+	sed -n '1p' "${file_in}"
 	echo -e "		</title>"	
 	echo -e "	</head>"
  	echo -e "	<body>"
-  	sed -n '3,$p' ${file_in}
+  	sed -n '3,$p' "${file_in}"
 	echo -e "	</body>"
 	echo -e "</html>"
 }
