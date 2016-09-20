@@ -2,10 +2,15 @@
 
 set -ex
 
-function html() {
-    TITLE="$(head -n 1 "$1")"
-    BODY="$(tail -n +2 "$1")"
-    FILENAME=$(sed 's/txt/html/g' <<< "$1")
+# Remove previous output folder
+rm -rf "$2"
+# Copy txt files for exact (sub)folder structure
+mkdir -p "$2"
+# Do the HTML conversion
+for FILE in $1/*.txt; do
+    TITLE="$(head -n 1 "$FILE")"
+    BODY="$(tail -n +2 "$FILE")"
+    FILENAME="$(basename "$FILE" .txt).html"
     # Paragraph formatting
     BODY=$(sed ':a;N;$!ba;s/^\n/<p>/g' <<< "$BODY")
     BODY=$(sed ':a;N;$!ba;s/\n\+/<\/p><p>/g' <<< "$BODY")
@@ -13,15 +18,5 @@ function html() {
     # URL formatting
     BODY=$(sed 's/\(https\?[^ <]*.com\(\/[^ <\.]*\)\?\)/<a href="\1">\1<\/a>/g' <<< "$BODY")
     # Save html
-    sed -e "s@{{title}}@$TITLE@g; s@{{body}}@$BODY@g" "$(pwd)"/template.html > "$FILENAME"
-}
-export -f html
-
-# Remove previous output folder
-rm -rf ./"$2"
-# Copy txt files for exact (sub)folder structure
-cp -R ./"$1" ./"$2"
-# Do the HTML conversion
-find ./"$2" -type f -exec bash -c 'html "$0"' {} \;
-# Remove old .txt files in output folder
-find ./"$2" -type f -name "*.txt" -print0 | xargs -0 rm
+    sed -e "s@{{title}}@$TITLE@g; s@{{body}}@$BODY@g" "template.html" > "$2"/"$FILENAME"
+done
