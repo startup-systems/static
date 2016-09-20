@@ -14,7 +14,7 @@ do
                 fi
                 outputFile=$(basename "$file" ".txt")
                 echo "$template" > "$outputDirectory/""$outputFile.html"
-                sed -i -e "s/{{title}}/$( head -n 1 $file)/g" $outputDirectory"/"$outputFile".html"
-                sed -i -e "s/{{body}}/$( tail -n +3 $file)/g" $outputDirectory"/"$outputFile".html"
-        done<$file
+                sed -i -e "s/{{title}}/""$( head -n 1 $file)""/g" "$outputDirectory/""$outputFile.html"
+                sed -i -e "s/{{body}}/""$( tail -n +3 $file)""/g" "$outputDirectory/""$outputFile.html"
+        done<"$file"
 done
