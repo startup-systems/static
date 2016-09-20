@@ -14,8 +14,8 @@ fi
 
 for file in $inputFolder*; do
     fullFilePath=$file
-    baseFileName=`basename $fullFilePath`
-    baseFileName=`echo $baseFileName | cut -f 1 -d .`
+    baseFileName=`basename $fullFilePath .txt`
+    #baseFileName=`echo $baseFileName | cut -f 1 -d .`
 
     title=''
     body='<p>'
@@ -27,14 +27,14 @@ for file in $inputFolder*; do
             title="${title} ${line}"
         else
             if [ $(echo $line | wc -c) -eq 1 ];then
-                body="${body}<\/p><p>${line}<br>"
+                body="${body}<p>${line}</p>"
             else
-                body="${body}""${line}"$'<br>'
+                body="${body}""${line}"
             fi
         fi
     done <$fullFilePath 
 
-    body="${body}<\/p>"
+    body="${body}"
     cp template.html "${outputFolder}/${baseFileName}.html"
     
     sed -i -e "s/{{title}}/$title/g" -e "s/{{body}}/$body/g" "${outputFolder}/${baseFileName}.html"
