@@ -12,10 +12,9 @@ do
                 outputFile=$(basename "$file" ".txt")
                 echo "$template+$outputFile"
                 echo "$template" > "$outputDir/$outputFile.html"
-                sed -i -e "s/{{title}}/$( head -n 1 "$file")/g" "$outputDir/$outputFile.html" 
-sed -i -e "s/{{body}}/$(tail -n +3 "$file")/g" "$outputDir/$outputFile.html"     
+                sed -i "s/{{title}}/$( head -n 1 "$file")/g" "$outputDir/$outputFile.html" 
+sed -i  "s/{{body}}/$(tail -n +3 "$file")/g" "$outputDir/$outputFile.html"     
 
 #sed -i -e "s/{{body}}/$(tail -n +2 $file)/g" $outputDir"/"$outputFile".html"
         done <"$file"
 done
-# YOUR CODE HERE
