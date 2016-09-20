@@ -50,25 +50,20 @@ def populated_output_dir(populated_input_dir, output_dir):
     assert result.returncode == 0
     yield output_dir
 
-def get_files(path):
-    files = os.listdir(path)
-    files.sort()
-    return files
-
 def test_files(input_files, populated_output_dir):
     input_filenames = ["post{}.html".format(f.file_number) for f in input_files]
-    output_filenames = get_files(populated_output_dir)
+    output_filenames = helpers.get_files(populated_output_dir)
     assert output_filenames == input_filenames
 
 def test_titles(input_files, populated_output_dir):
-    output_files = get_files(populated_output_dir)
+    output_files = helpers.get_files(populated_output_dir)
 
     for input_file in input_files:
         path = os.path.join(populated_output_dir, "post{}.html".format(input_file.file_number))
         helpers.check_title(path, input_file.title)
 
 def test_bodies(input_files, populated_output_dir):
-    output_files = get_files(populated_output_dir)
+    output_files = helpers.get_files(populated_output_dir)
 
     for input_file in input_files:
         path = os.path.join(populated_output_dir, "post{}.html".format(input_file.file_number))
