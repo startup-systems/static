@@ -14,8 +14,11 @@ function html() {
 }
 export -f html
 
-rm -rf output
+# Remove previous output folder
+rm -rf ./$2
+# Copy txt files for exact (sub)folder structure
 cp -R ./$1 ./$2
-
+# Do the HTML conversion
 find ./$2 -type f -exec bash -c 'html "$0"' {} \;
+# Remove old .txt files in output folder
 find ./$2 -name "*.txt" | xargs rm
