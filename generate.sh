@@ -8,8 +8,8 @@ template=$(<template.html)
 
 for file in $1/*
 do
-        while read p; do
-                if [ ! -d $outputDirectory ]; then
+        while read -r; do
+                if [ ! -d "$outputDirectory" ]; then
                         mkdir -p "$outputDirectory"
                 fi
                 outputFile=$(basename "$file" ".txt")
