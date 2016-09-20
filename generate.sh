@@ -12,6 +12,7 @@ files=($("ls" "$1"))
 for i in "${files[@]}"
 do
 	NAME=$(basename "$i")
+	NAME="${NAME%.*}"
 	cat template.html > "$2/$NAME.html"
 	subtopic=$(head -n 1 "$1"/"$i")
 	subbody=$(tail -n 1 "$1"/"$i")
