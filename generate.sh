@@ -32,6 +32,6 @@ do
 	cat template.html >> "$output_dir/$filename.html"
 
 	#now, make substitutions into file (syntax for sed taken from https://unix.stackexchange.com/questions/159367/using-sed-to-find-and-replace
-	sed -i -e "s/{{title}}/$title/g" "$output_dir/$filename.html"
-	sed -i -e "s/{{body}}/$body/g" "$output_dir/$filename.html"
+	sed -i -e "s~{{title}}~$title~g" "$output_dir/$filename.html"
+	sed -i -e "s~{{body}}~$body~g" "$output_dir/$filename.html"
 done
