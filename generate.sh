@@ -1,13 +1,15 @@
 #!/bin/bash
 
-#set -x #print commands
+set -x #print commands
 set -e #exit upon errors
 echo "[Running the script..]"
 for input_file in "$1"/*;do
 	echo "<$input_file>"
-	output_file=$(basename "$input_file")
+	output_file=$($2/$(basename "$input_file").html)
 	echo "$output_file" 
-
+	mkdir $2	
+	touch output_file
+	
 	title=$(cat "$input_file" | sed -n '1p')
 	#echo "$title"
 	body=$(cat "$input_file" | sed -n 2~1p | sed -e 'i <p>' -e 'a </p>')
@@ -23,6 +25,6 @@ for input_file in "$1"/*;do
   	<body>
     		$body
   	</body>
-	</html>">>"./$output_file.html"
+	</html>">>"$output_file"
 done
 
