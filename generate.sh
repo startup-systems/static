@@ -13,7 +13,7 @@ do
                         mkdir -p "$outputDirectory"
                 fi
                 outputFile=$(basename "$file" ".txt")
-                echo "$template > $outputDirectory"/"$outputFile".html""
+                echo $template > $outputDirectory"/"$outputFile".html"
                 sed -i -e "s/{{title}}/$( head -n 1 $file)/g" $outputDirectory"/"$outputFile".html"
                 sed -i -e "s/{{body}}/$( tail -n +3 $file)/g" $outputDirectory"/"$outputFile".html"
         done<$file
