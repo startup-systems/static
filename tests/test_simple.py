@@ -35,10 +35,10 @@ def test_bodies(output_dir):
     files = helpers.get_files(output_dir)
 
     potst1path = os.path.join(output_dir, files[0])
-    helpers.check_body(potst1path, "This is the body of Post One.")
+    helpers.check_body_text(potst1path, "This is the body of Post One.")
 
     otherpostpath = os.path.join(output_dir, files[1])
-    helpers.check_body(otherpostpath, "This is the body of the other post.")
+    helpers.check_body_text(otherpostpath, "This is the body of the other post.")
 
 def test_subdirectory_creation():
     with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
