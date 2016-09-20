@@ -3,9 +3,8 @@
 set -ex
 template=$(<template.html)
 outputDir=$2
-for files in $1/*
+for file in $1/*
 do
-file=$files
         while read -r; do
                 if [ ! -d "$outputDir" ]; then
                         mkdir -p "$outputDir"
@@ -17,5 +16,5 @@ file=$files
 sed -i  "s/{{body}}/$(tail -n +3 "$file")/g" "$outputDir/$outputFile.html"     
 
 #sed -i -e "s/{{body}}/$(tail -n +2 $file)/g" $outputDir"/"$outputFile".html"
-        done <"$file"
+        done < "$file"
 done
