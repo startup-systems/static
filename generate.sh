@@ -19,10 +19,11 @@ for input_file_path in "$1"/*;do
 	title=$(cat "$input_file_path" | sed -n '1p')
 	#echo "$title"
 	#echo $(wc -l < "$input_file_path")
-	if [ $(wc -l < $input_file_path) -le 3 ]; then
-		body=$(cat "$input_file_path" | sed -n 3p)
+	line_count=$(wc -l < $input_file_path)
+	if [ $line_count -le 3 ]; then
+		body=$(sed -n 3p "$input_file_path")
 	else 
-		body=$(cat "$input_file_path" | sed -n 3~2p | sed -e 'i <p>' -e 'a </p>')
+		body=$(sed -n 3~2p "$input_file_path" | sed -e 'i <p>' -e 'a </p>')
 	fi
 	echo "BODY: $body"
 
@@ -30,7 +31,7 @@ for input_file_path in "$1"/*;do
 <!DOCTYPE html>
 <html>
  	<head>
-  		<meta charset="utf-8">
+  		<meta charset='utf-8'>
     		<title>$title</title>
   	</head>
   	<body>
