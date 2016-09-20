@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 set -ex
 
 if [ -d "$1" ]; then
