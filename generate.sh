@@ -5,7 +5,9 @@
 # YOUR CODE HERE
 SRC=$1
 DST=$2
-mkdir "$DST"
+
+if [ ! -d "$DST" ]; then
+	mkdir "$DST"
 
 for filename in $SRC/*.txt
 do
