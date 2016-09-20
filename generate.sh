@@ -5,7 +5,7 @@ set -ex
 # YOUR CODE HERE
 file_output=$2
 if [ ! -d "$file_output" ]; then
-mkdir "$file_output"
+mkdir -p "$file_output"
 fi
 
 file_input="$1/*"
