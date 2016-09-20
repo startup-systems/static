@@ -9,9 +9,9 @@ then
   mkdir -p "$file_output"
 fi
 
-file_input="$1/*"
+file_input="$1"
 
-for files in "$file_input"
+for files in "$file_input"/*
 do
   output_name=$(basename "$files" .txt)
   new_name=$output_name.html
