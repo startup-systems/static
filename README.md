@@ -124,6 +124,15 @@ pytest -v -k simple
 pytest -v
 # run all tests, including extra credit ones
 pytest --runxfail -v
+
+# run the Code Climate checks locally
+sudo apt update
+sudo apt install shellcheck
+shellcheck generate.sh
+# if it doesn't print anything, you're good to go!
 ```
 
-[More info about pytest.](http://doc.pytest.org/)
+More info:
+
+* [pytest](http://doc.pytest.org/)
+* [ShellCheck](https://www.shellcheck.net/)
