@@ -5,7 +5,7 @@ set -e #exit upon errors
 echo "[Running the script..]"
 for input_file_path in "$1"/*;do
 	echo "INPUT FILE PATH: $input_file_path"
-	cat $input_file_path
+	cat "$input_file_path"
 	input_file_basename=$(basename "$input_file_path")
 	echo "INPUT FILE BASENAME: $input_file_basename" 
 	input_file_basename_without_extension=$(basename "$input_file_path" .txt)
@@ -13,13 +13,13 @@ for input_file_path in "$1"/*;do
 	output_file_path=$2/$input_file_basename_without_extension.html
 
 	echo "OUTPUT FILE PATH:$output_file_path"
-	mkdir -p $2	
-	touch $output_file_path
+	mkdir -p "$2"	
+	touch "$output_file_path"
 	
 	title=$(cat "$input_file_path" | sed -n '1p')
 	#echo "$title"
-	echo $(wc -l < "$input_file_path")
-	if [ $(wc -l < "$input_file_path") -le 3 ]; then
+	#echo $(wc -l < "$input_file_path")
+	if [ $(wc -l < $input_file_path) -le 3 ]; then
 		body=$(cat "$input_file_path" | sed -n 3p)
 	else 
 		body=$(cat "$input_file_path" | sed -n 3~2p | sed -e 'i <p>' -e 'a </p>')
