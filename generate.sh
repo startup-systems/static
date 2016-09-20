@@ -3,8 +3,9 @@
 set -ex
 template=$(<template.html)
 outputDir=$2
-for file in $1/*
+for files in $1/*
 do
+file=$files
         while read -r; do
                 if [ ! -d "$outputDir" ]; then
                         mkdir -p "$outputDir"
