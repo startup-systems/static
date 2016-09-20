@@ -16,11 +16,11 @@ for input_file_path in "$1"/*;do
 	mkdir -p "$2"	
 	touch "$output_file_path"
 	
-	title=$(cat "$input_file_path" | sed -n '1p')
+	title=$( sed -n '1p' "$input_file_path")
 	#echo "$title"
 	#echo $(wc -l < "$input_file_path")
-	line_count=$(wc -l < $input_file_path)
-	if [ $line_count -le 3 ]; then
+	line_count=$(wc -l < "$input_file_path")
+	if [ "$line_count" -le 3 ]; then
 		body=$(sed -n 3p "$input_file_path")
 	else 
 		body=$(sed -n 3~2p "$input_file_path" | sed -e 'i <p>' -e 'a </p>')
