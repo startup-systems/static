@@ -12,7 +12,7 @@ if [ ! -d "$outputFolder" ]; then
     mkdir -p "$outputFolder"
 fi
 
-find $inputFolder -name '*.txt' > file.txt
+find "$inputFolder" -name '*.txt' > file.txt
 while IFS='' read -r file || [[ -n "$file" ]]; do
     fullFilePath=$file
     baseFileName=`basename "$fullFilePath" .txt`
