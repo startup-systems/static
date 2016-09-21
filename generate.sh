@@ -5,13 +5,12 @@ set -ex
 # YOUR CODE HERE
 echo "This script converts any file into a html file."
 mkdir -p "$2"
-cd "$2"
-outputdir=$(pwd)
-cd -
-cd "$1"
- 
-inputdir=$(pwd)
-cd - 
+#cd "$2"
+outputdir=$(cd "$2"; pwd)
+#cd -
+#cd "$1"
+inputdir=$(cd "$1"; pwd)
+#cd - 
 
 find "$inputdir" -name "*.txt" > temp_file_list.txt
 
