@@ -5,8 +5,8 @@ set -ex
 # YOUR CODE HERE
 input=$1
 output="$2"
-if [! -d $output ]; then
-   mkdir -p $output
+if [ ! -d "$output" ]; then
+   mkdir -p "$output"
 fi
 
 for file in $input*
