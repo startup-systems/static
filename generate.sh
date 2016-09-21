@@ -9,10 +9,10 @@ outputdir=$(cd "$2"; pwd)
 
 for file in "$inputdir"/*;
 do
-	filename=$(basename $file .txt)
+	filename=$(basename "$file" .txt)
 	echo "$filename"
-	title=$(sed -n '1p' $file)
-	body=$(sed -n '3,$p' $file)
+	title=$(sed -n '1p' "$file")
+	body=$(sed -n '3,$p' "$file")
 	echo "$body"
 	sed -e "s/{{title}}/$title/" < template.html > tmpfile
 	sed -e "s/{{body}}/$body/" < tmpfile > "$outputdir/$filename.html"
