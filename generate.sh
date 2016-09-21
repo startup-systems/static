@@ -3,23 +3,24 @@
 set -ex
 
 # YOUR CODE HERE
-# Any arguments appear as "$1", "$2", "$3" and so on. 
-input = $1
-output = $2
+# Any arguments appear as "$1", "$2", "$3" 
 
-if [ ! -d $output ]; then
-  mkdir -p output
+indir="$1"
+outdir=$2
+
+if [ ! -d "$outdir" ]; then
+  mkdir -p "$outdir"
 fi
 
 
-for filename in "input"/*
+for file in "$indir"/*
 do
-  #get rid of txt
-  filename = $(basename "filename" .txt)
-  htmlname = $filename.html
-  titlesub = $(head -1 "$filename")
-  bodysub = $(tail -1 "$filename")
-  sed -e 's/{{title}}/'"$titlesub"'/g' -e 's#{{body}}#'"$bodysub"'#g' template.html > "$output/$htmlfile"
+  fname=$(basename "$file" .txt)
+  newfile=$fname.html
+  titlesub=$(head -1 "$file")
+  bodysub=$(tail -n 1 "$file")
 
-
+  sed -e 's/{{title}}/'"$titlesub"'/g' -e 's#{{body}}#'"$bodysub"'#g' template.html > "$outdir/$newfile"
 done
+
+
