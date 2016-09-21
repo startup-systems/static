@@ -15,7 +15,7 @@ fi
 find "$inputFolder" -name '*.txt' > file.txt
 while IFS='' read -r file || [[ -n "$file" ]]; do
     fullFilePath=$file
-    baseFileName=`basename "$fullFilePath" .txt`
+    baseFileName=$(basename "$fullFilePath" .txt)
     #baseFileName=`echo $baseFileName | cut -f 1 -d .`
 
     title=''
