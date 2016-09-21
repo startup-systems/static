@@ -14,6 +14,6 @@ do
     titleField="$(head -n 1 "$post")"
     bodyText="$(tail -n 1 "$post")"
     
-    cat template.html | sed -e 's/{{body}}/'"$bodyText"'/' -e 's/{{title}}/'"$titleField"'/' >> "$2/$html"
+    echo "$post" | sed -e 's/{{body}}/'"$bodyText"'/' -e 's/{{title}}/'"$titleField"'/' template.html >> "$2/$html"
 
 done
