@@ -22,7 +22,7 @@ echo "Input Directory" "$inputFile"
 #Store output of title(first line) and body(last line)
 # in input text to variable
 
-for f in input/*.txt
+for f in "$input"/*.txt
 do
 
  #echo $(basename "$f")
