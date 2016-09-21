@@ -17,9 +17,10 @@ then
 	exit 1
 fi
 
-if [ ! -d $output ]
+
+if [ ! -d "$output" ]
 then
-	mkdir $output
+	mkdir -p $output
 fi
 
 files=$( ls "$input" )
