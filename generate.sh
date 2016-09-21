@@ -10,7 +10,7 @@ echo "Input Dir: $input"
 echo "Output Dir: $output"
 
 #Create output directory structure if it doesn't exist.
-mkdir -p $output
+mkdir -p "$output"
 
 #Embedbed template
 template='<!DOCTYPE html>
@@ -29,12 +29,12 @@ for filename in $input/*.txt; do
     message=""
     title=""
     i=0
-    destFilename=$(basename $filename | sed "s/.txt/.html/")
+    destFilename="$(basename $filename | sed "s/.txt/.html/")"
 
     #echo "File: $filename"
     #echo "Dest Filename: $destFilename"
     echo "Archivo:"
-    cat $filename
+    cat "$filename"
     echo -e "\n"
     
     while read -r line
@@ -55,14 +55,14 @@ for filename in $input/*.txt; do
 
       fi
       i=$(($i+1))
-    done < $filename
+    done < "$filename"
 
 
     #echo "TITLE: $title"
     #echo "Message: $message"
 
     #Tricks to allow multiline messages with sed...
-    echo -e "$(echo -e "$template" | sed "s@{{title}}@$title@" | sed "s@{{body}}@$message@")" > $output/$destFilename
+    echo -e "$(echo -e "$template" | sed "s@{{title}}@$title@" | sed "s@{{body}}@$message@")" > "$output/$destFilename"
 
     #echo "_____________________"
 done
