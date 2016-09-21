@@ -21,7 +21,7 @@ while IFS='' read -r file || [[ -n "$file" ]]; do
     title=''
     body=''
     flag=0
-    echo "\n" >> $fullFilePath
+    echo "\n" >> "$fullFilePath"
     while read -r line; do 
         if [ "$(echo "$line" | wc -c)" -eq 1 ] && [ "$flag" -eq 0 ]; then 
             flag=1
