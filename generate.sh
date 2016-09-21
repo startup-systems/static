@@ -12,9 +12,9 @@ if [ -d "$1" ]; then
 for file in "$1"/*.txt
   do
 
-    title="$(cat "$file" | head -n 1)"
+    title="$(head -n 1 "$file")"
 
-    body="$(cat "$file" | tail -n 1)"
+    body="$(tail -n 1 "$file")"
 
     base="$(basename "$file" .txt)"
 
