@@ -8,7 +8,7 @@ if [ ! -d "$outputdir" ]; then
     mkdir -p $outputdir
 fi
 
-template=~/static/template.html
+template=template.html
 for i in $inputdir; do
     lines=$(sed -n $= $i)
     title=$(head -1 $i)
@@ -25,4 +25,9 @@ for i in $inputdir; do
 	
 	
 done
+    
+    
+    
+    
+    
 
