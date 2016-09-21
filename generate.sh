@@ -17,7 +17,7 @@ do
 
 	f=$(basename "$f")
 	f="${f%.*}".html # wihout extension
-	f="$output_dir$f.html"
+	f="$output_dir$f"
 	touch "$f"
 	# sed -e 's/{{title}}/"$title"/g' 's/{{body}}/'"$body"'/g' template.html > "$f"
 	content=$(sed "s@{{title}}@$title@g;s@{{body}}@$body@g" template.html)
