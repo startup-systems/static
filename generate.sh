@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 FILES="$1/*.txt"
 DEST=$2
 mkdir -p "$DEST"
@@ -13,7 +11,7 @@ do
 
   # Parsing doc
   headerline=$(head -1 "$f")
-  restofdoc=$(tail -n +2 "$f")
+  restofdoc=$(tail -n +3 "$f")
   # end of parsing doc
   filename=$(basename "$f")
   filename="${filename%.*}"
@@ -23,8 +21,8 @@ do
   # Replace
 #  sed -i "/{{title}}/c \\${headerline}1" "$DEST"/"$filename".html
 #  sed 's/{{title}}/'$headerline/ "$DEST"/"$filename".html
-  sed -i "s/{{title}}/$(echo $headerline)/g" "$DEST"/"$filename".html
-  sed -i -e "s/{{body}}/$restofdoc/g" "$DEST"/"$filename".html
+  sed -i "s/{{title}}/${headerline}/" "$DEST"/"$filename".html
+  sed -i -e "s/{{body}}/${restofdoc}/g" "$DEST"/"$filename".html
 
 done
 #cat template.html
