@@ -15,6 +15,7 @@ for file in "$input_dir"/*
 do
   oldname=$(basename "$file" .txt)
   newname=$oldname.html
+# define title/body by getting first line
   title=$(head -n 1 "$file")
   body=$(tail -n 1 "$file")
 # replace title and body, then output the file
