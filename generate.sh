@@ -10,7 +10,7 @@ do
   main=$(head -n "$count" "$file" | tail -n "$counts")
   main=$(echo $main | tr '\n' "\\n")
   fname=$(basename "$file" .txt)
-  echo ""> "$fname.html"
+  echo ""> "$2/$fname.html"
   cp template.html "$2/$fname.html"
   sed -i "s/{{title}}/$line/g" "$2/$fname.html"
   sed -i "s/{{body}}/$main/g" "$2/$fname.html"
