@@ -29,7 +29,7 @@ for filename in $input/*.txt; do
     message=""
     title=""
     i=0
-    destFilename="$(basename $filename | sed 's/.txt/.html/')"
+    destFilename="$(basename "$filename" | sed 's/.txt/.html/')"
 
     #echo "File: $filename"
     #echo "Dest Filename: $destFilename"
