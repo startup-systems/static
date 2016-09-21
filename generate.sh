@@ -21,14 +21,14 @@ while IFS='' read -r file || [[ -n "$file" ]]; do
     title=''
     body=''
     flag=0
-    echo '\n' >> $fullFilePath
+    echo "\n" >> $fullFilePath
     while read -r line; do 
-        if [ $(echo "$line" | wc -c) -eq 1 ] && [ "$flag" -eq 0 ]; then 
+        if [ "$(echo "$line" | wc -c)" -eq 1 ] && [ "$flag" -eq 0 ]; then 
             flag=1
         elif [ $flag -eq 0 ]; then
             title="${line}"
         else
-            if [ $(echo "$line" | wc -c) -eq 1 ];then
+            if [ "$(echo "$line" | wc -c)" -eq 1 ];then
                 body="<p>${line}<\/p>"
             else
                 body="${body}${line}"
@@ -40,6 +40,8 @@ while IFS='' read -r file || [[ -n "$file" ]]; do
     cp template.html "${outputFolder}/${baseFileName}.html"
     
     sed -i -e "s/{{title}}/$title/g" -e "s/{{body}}/$body/g" "${outputFolder}/${baseFileName}.html"
-    #sed -i -e "s/{https_ }/dd
-    #rm "${outputFolder}/${baseFileName}.html0"
 done < file.txt
+
+#References:
+#http://stackoverflow.com/questions/4321456/find-exec-a-shell-function
+#http://tldp.org/LDP/abs/html/x23170.html
