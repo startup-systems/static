@@ -15,5 +15,4 @@ do
         Head="$(head -n 1 "$file")"
         Tail="$(tail -n 3 "$file")"
         sed -e 's#{{title}}#"$Head"#;s#{{body}}#"$Tail"#' template.html > "$file_output"/"$html_n".html
-        
 done
