@@ -9,7 +9,7 @@ do
                 if [ ! -d "$outputDir" ]; then
                         mkdir -p "$outputDir"
                 fi
-                outputFile="$(basename $file ".txt")"
+                outputFile="$(basename "$file" ".txt")"
                 echo "$template+$outputFile"
                 echo "$template" > "$outputDir/$outputFile.html"
                  sed -i -e "s/{{title}}/$( head -n 1 "$file")/g" "$outputDir/$outputFile.html" 
