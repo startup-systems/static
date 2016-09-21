@@ -1,4 +1,4 @@
-#!/bin/baish
+#!/bin/bash
 
 set -ex
 
