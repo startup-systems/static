@@ -12,6 +12,7 @@ template=~/static/template.html
 for i in $inputdir; do
     lines=$(sed -n $= $i)
     title=$(head -1 $i)
+
     body=$(tail -n $(($lines-2)) $i)
     
     oldfilename=$(basename $i)
@@ -21,6 +22,7 @@ for i in $inputdir; do
     sed -i "s/{{body}}/$body/g" $outputdir/$newfilename
     
     #extra credit
+	
 	
 done
 
