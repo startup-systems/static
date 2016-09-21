@@ -16,5 +16,5 @@ do
   sed -i -e "s/{{body}}/$(tail -n +3 "$file")/g" "$outputDir/$outputFile.html"
 
 #sed -i -e "s/{{body}}/$(tail -n +2 $file)/g" $outputDir"/"$outputFile".html"
-        done<$file
+        done<"$file"
 done
