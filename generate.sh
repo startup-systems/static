@@ -16,7 +16,7 @@ do
 	input_file_name=${input_file_name%.*} #strip off the extension
 	title=$(head -n 1 "$1"/"$input_file")
 	body=$(tail -n 1 "$1"/"$input_file")
-	cat template.html > "$2"/"$input_file_name.html"
+	cat template.html > "$2"/"$input_file_name".html
 	sed -i "s/{{body}}/$body/g" "$2"/"$input_file_name".html
     	sed -i "s/{{title}}/$title/g" "$2"/"$input_file_name".html
 done
