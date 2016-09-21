@@ -4,10 +4,7 @@ set -ex
 
 # YOUR CODE HERE
 
-if [ ! -d "$2" ]
-	then
-	mkdir "$2"
-fi
+mkdir -p "$2"
 
 for post in $1/*
 do
