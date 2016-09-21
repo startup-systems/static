@@ -23,7 +23,7 @@ do
   # Replace
 #  sed -i "/{{title}}/c \\${headerline}1" "$DEST"/"$filename".html
 #  sed 's/{{title}}/'$headerline/ "$DEST"/"$filename".html
-  sed -i -e "s/{{title}}/$headerline/g" "$DEST"/"$filename".html
+  sed -i "s/{{title}}/$(echo $headerline)/g" "$DEST"/"$filename".html
   sed -i -e "s/{{body}}/$restofdoc/g" "$DEST"/"$filename".html
 
 done
