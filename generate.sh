@@ -9,7 +9,7 @@ indir=$1
 outdir=$2
 #check if directory exists (chttp://stackoverflow.com/questions/59838/check-if-a-directory-exists-in-a-shel#l-script)
 if [ ! -d "$outdir" ]; then
- mkdir "$outdir"
+ mkdir -p "$outdir"
 fi
 
 for file in "$indir"/*
