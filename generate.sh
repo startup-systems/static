@@ -28,6 +28,6 @@ do
   echo "$template" > "$outputDir/""$filename.html"
 
 	#Replacing title and body
-  sed -e "s/{{title}}/$( head -n 1 "$file")/g" "$outputDir/""$filename.html"
-  sed -e "s/{{body}}/$( tail -n +3 "$file")/g" "$outputDir/""$filename.html" #line 2 is empty
+  sed -i -e "s/{{title}}/$( head -n 1 "$file")/g" "$outputDir/$filename.html"
+  sed -i -e "s/{{body}}/$( tail -n +3 "$file")/g" "$outputDir/$filename.html" #line 2 is empty
 done
