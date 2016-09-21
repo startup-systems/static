@@ -12,19 +12,18 @@ set -ex
 ########## STATIC SITE BUILDER ########## 
 
 input=$(cd "$1"; pwd)
-output=$(cd "$2"; pwd)
 
 mkdir -p "$2"
 
 for textfile in "$input"/*;
 do
-	filename=$(basename $textfile .txt)
+	filename=$(basename "$textfile" .txt)
 
-	title=$(sed '1q' $textfile)
-	cat template.html | sed "s/{{title}}/$title/" > tmp.html
+	title=$(sed '1q' "$textfile")
+	sed "s/{{title}}/$title/" < template.html > tmp.html
 
-	body=$(tail -n +3 $textfile)
-	cat tmp.html | sed "s/{{body}}/$body/" > "$2/$filename.html"
+	body=$(tail -n +3 "$textfile")
+	sed "s/{{body}}/$body/" < tmp.html > "$2/$filename.html"
 
 	rm tmp.html
 done
