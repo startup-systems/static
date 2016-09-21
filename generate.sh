@@ -19,7 +19,7 @@ do
     
     i=0
     
-    while IFS=$"\n" read -r line || [[ -n "$line" ]]; 
+    while IFS=$'\n' read -r line || [[ -n "$line" ]]; 
     do
         if [ "$line" != "" ]; then
             
