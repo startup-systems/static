@@ -13,8 +13,8 @@ do
 	title=$(head -n1 "$f")
 	body=$(tail -n1 "$f")
 
-	html=$(sed "s/{{title}}/$title/" template.html)
-	html=$(echo "$html" | sed "s/{{body}}/$body/")
+	html=$(sed -e "s/{{title}}/$title/" -e "s/{{body}}/$body/" template.html)
+	# html=$(echo "$html" | sed "s/{{body}}/$body/")
 
 
 	f="${f%.*}" # wihout extension
