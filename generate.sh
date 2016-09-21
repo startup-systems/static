@@ -21,7 +21,7 @@ while IFS='' read -r file || [[ -n "$file" ]]; do
     title=''
     body=''
     flag=0
-    fileWithNewline="$(cat $fullFilePath)"\\n
+    fileWithNewline=$(cat" $fullFilePath")\\n
     echo "$fileWithNewline" > tempFile.txt
     #echo "\n" >> "$fullFilePath"
     while read -r line; do
