@@ -3,14 +3,10 @@
 set -ex
 
 # YOUR CODE HERE
-echo "This script converts any file into a html file."
 mkdir -p "$2"
-#cd "$2"
+
 output=$(cd "$2"; pwd)
-#cd -
-#cd "$1"
 input=$(cd "$1"; pwd)
-#cd - 
 
 find "$input" -name "*.txt" > temp.txt
 
