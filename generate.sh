@@ -10,11 +10,11 @@ mkdir -p "$output_dir" # if not exist
 
 for f in "$input_dir"/*
 do
-	title=${head -n1 "$input_dir"/"$f"}
-	body=${tail -n1 "$input_dir"/"$f"}
+	title=${head -n1 "$f"}
+	body=${tail -n1 "$f"}
 
-	html=${sed 's/{{title}}/"$title"/' template.html}
-	html=${echo "$html" | sed 's/{{body}}/"$body"/'}
+	html=${sed "s/{{title}}/$title/" template.html}
+	html=${echo "$html" | sed "s/{{body}}/$body/"}
 
 
 	f="${f%.*}" # wihout extension
@@ -23,3 +23,4 @@ do
 	echo $html >> $newF
 
 done
+
