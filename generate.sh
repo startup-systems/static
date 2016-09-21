@@ -20,7 +20,7 @@ fi
 
 if [ ! -d "$output" ]
 then
-	mkdir -p $output
+	mkdir -p "$output"
 fi
 
 files=$( ls "$input" )
