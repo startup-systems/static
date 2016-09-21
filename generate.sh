@@ -15,5 +15,5 @@ do
   title=$(head -n1 "$file")
   body=$(tail -n+3 "$file")
   outputname="$output/$name.html"
-  sed -e 's/{{title}}/'"$title"'/g' -e 's#{{body}}#'"$body"'#g' template.html > $outputname
+  sed -e 's/{{title}}/'"$title"'/g' -e 's#{{body}}#'"$body"'#g' template.html > "$outputname"
 done
