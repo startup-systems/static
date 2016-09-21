@@ -22,13 +22,14 @@ while IFS='' read -r file || [[ -n "$file" ]]; do
     body=''
     flag=0
     echo "\n" >> "$fullFilePath"
-    while read -r line; do 
-        if [ "$(echo "$line" | wc -c)" -eq 1 ] && [ "$flag" -eq 0 ]; then 
+    while read -r line; do
+        check=$(echo "$line" | wc -c)
+        if [ "$check" -eq 1 ] && [ "$flag" -eq 0 ]; then 
             flag=1
         elif [ $flag -eq 0 ]; then
             title="${line}"
         else
-            if [ "$(echo "$line" | wc -c)" -eq 1 ];then
+            if [ "$check" -eq 1 ];then
                 body="<p>${line}<\/p>"
             else
                 body="${body}${line}"
