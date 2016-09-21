@@ -6,8 +6,8 @@ if [ ! -d "$2" ]; then
 	mkdir -p "$2"
 fi
 
-#for file in "$1"/*
-for file in $(ls $1)
+input=$(ls "$1")
+for file in $input
 do
     title=$(head -n 1 "$1"/"$file")
 	body=$(tail -n 1 "$1"/"$file")
