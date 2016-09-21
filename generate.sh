@@ -14,6 +14,6 @@ do
         body=$(tail -n 1 "$file")
 filename=$(basename "$file" .txt).html
 sed 's/{{title}}/'"$title"'/g' template.html>> "$2/$filename"
-sed 's/{{body}}/'"$body"'/g' template.html>> "$2/$filename"
+sed 's#{{body}}#'"$body"'#g' template.html>> "$2/$filename"
 done
 
