@@ -7,7 +7,7 @@ do
   line=$(head -n 1 "$file")
   count=$(sed -n '$=' "$file")
   counts=$((count - 1))
-  main=$(head -n "$count" $file | tail -n "$counts")
+  main=$(head -n "$count" "$file" | tail -n "$counts")
   main=$(echo $main | tr '\n' "\\n")
   fname=$(basename "$file" .txt)
   echo ""> "$fname.html"
