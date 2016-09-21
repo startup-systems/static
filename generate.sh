@@ -10,16 +10,16 @@ mkdir -p "$2"
 
 for file in "$1"/*
 do
-    fname=`basename $file`
-    printf "\nProcessing $fname...\n"
-    str=$(echo $fname | rev | cut -d"." -f2-  | rev)
+    fname=`basename "$file"`
+    printf "\nProcessing "$fname"...\n"
+    str=$(echo "$fname" | rev | cut -d"." -f2-  | rev)
     cp template.html "$2/$str.html"
     
     # Parse all files line by line and save to an array
     
     i=0
     
-    while IFS='\n' read -r line || [[ -n "$line" ]]; 
+    while IFS="\n" read -r line || [[ -n "$line" ]]; 
     do
         if [ "$line" != "" ]; then
             
