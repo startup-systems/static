@@ -3,17 +3,15 @@
 #./generate.sh inputdir outputdir
 
 set -ex
+inputdir=$1
+outputdirectory=$2
 
-for file in examples/simple/*; do
+for file in `ls $inputdir/*.txt`; do
 	head=$(head -1 $file) #isolating title
-	tail=$(tail -1 $file) #isolating body
-	sed 's/{{title}}/head/' template.html > $file.html # in template.html, replacing {{file}} with head, also creating a new html file
-	for file in examples/simple/*; do
-		find . -name "*.html" #find the newly created html files
-			cp "$file" outputdir #trying to copy those files to the outputdirectory - but not sure how to do
-			for file in outputdir; do #for the files in this outputdirectory
-			sed 's/{{body}}/tail/' "$file.html" #now it's the tail's turn to replace the {{body}}
-		done
+	tail=$(tail -n +3 $file) #isolating body
+	sed 's/{{title}}/$head/' template.html > $outputdir filename=$(basename "$fullfilename")
+	for filename in $outputdir; do
+		sed 's/{{body}}/$tail/' $filename > $finalfile
 	done
 done
 
