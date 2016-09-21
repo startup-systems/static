@@ -10,10 +10,10 @@ fi
 
 template=template.html
 for i in $inputdir; do
-    lines="$(sed -n $= $i)"
-    title="$(head -1 $i)"
+    lines="$(sed -n $= "$i")"
+    title="$(head -1 "$i")"
 
-    body="$(tail -n $(($lines-2)) $i)"
+    body="$(tail -n $((lines-2)) "$i")"
     
     oldfilename="$(basename "$i" .txt)"
 
