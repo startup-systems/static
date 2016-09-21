@@ -9,13 +9,14 @@ if [ ! -d "$outputdir" ]; then
 fi
 
 template=template.html
-for i in "$inputdir"; do
+for i in $inputdir; do
     lines="$(sed -n $= $i)"
     title="$(head -1 $i)"
 
     body="$(tail -n $(($lines-2)) $i)"
     
-    oldfilename="$(basename $i)"
+    oldfilename="$(basename "$i" .txt)"
+
     newfilename="$oldfilename.html"
 
     sed "s/{{title}}/$title/g" "$template" > "$outputdir/$newfilename"
