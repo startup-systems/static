@@ -15,10 +15,12 @@ do
 
 	# html=$(echo "$html" | sed "s/{{body}}/$body/")
 
-
+	f=$(basename "$f")
 	f="${f%.*}".html # wihout extension
-	# touch "$f"
+	f="$output_dir$f.html"
+	touch "$f"
 	# sed -e 's/{{title}}/"$title"/g' 's/{{body}}/'"$body"'/g' template.html > "$f"
-	sed "s@{{title}}@$title@g;s@{{body}}@$body@g" template.html > "$f"
+	content=$(sed "s@{{title}}@$title@g;s@{{body}}@$body@g" template.html)
+	echo "$content" > "$f"
 
 done
