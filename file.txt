@@ -1,0 +1,2 @@
+examples/simple/postone.txt
+examples/simple/some-other-post.txt
