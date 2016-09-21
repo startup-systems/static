@@ -20,7 +20,7 @@ do
   titlesub=$(head -1 "$file")
   bodysub=$(tail -n 1 "$file")
 
-  sed -e 's/{{title}}/'"$titlesub"'/g' -e 's#{{body}}#'"$bodysub"'#g' template.html > "$outdir/$newfile"
+  sed -e 's/{{title}}/'"$titlesub"'/g' -e 's#{{body}}#'"$bodysub"'#g' template.html > "$output/$newfile"
 done
 
 
