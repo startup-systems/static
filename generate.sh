@@ -3,7 +3,7 @@
 set -ex
 # Kuljot's CODE HERE
 
-sudo mkdir -p "$2"
+mkdir -p "$2"
 inputdir=$(cd "$1"; pwd)
 outputdir=$(cd "$2"; pwd)
 
