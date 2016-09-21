@@ -17,9 +17,8 @@ do
 	# html=$(echo "$html" | sed "s/{{body}}/$body/")
 
 
-	f="${f%.*}" # wihout extension
-	newF="$output_dir$f.html"
-	touch "$newF"
-	echo "$html" >> "$newF"
+	f="${f%.*}".html # wihout extension
+	touch "$f"
+	echo "$html" >> "$f"
 
 done
