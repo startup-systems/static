@@ -16,7 +16,7 @@ for i in "$inputdir"; do
     body="$(tail -n $(($lines-2)) $i)"
     
     oldfilename="$(basename $i)"
-    newfilename="$(echo $oldfilename | sed s/txt/html/)"
+    newfilename="$oldfilename.html"
 
     sed "s/{{title}}/$title/g" "$template" > "$outputdir/$newfilename"
     sed -i "s/{{body}}/$body/g" "$outputdir/$newfilename"
