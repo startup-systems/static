@@ -18,7 +18,7 @@ do
 
 	f="${f%.*}".html # wihout extension
 	# touch "$f"
-	sed -e 's/{{title}}/'"$title"'/g' -e 's/{{body}}/'"$body"'/g' template.html > "$f"
-	# sed -e 's/{{title}}/'"$title"'/g' -e 's/{{body}}/'"$body"'/g' template.html > "$f"
+	# sed -e 's/{{title}}/"$title"/g' 's/{{body}}/'"$body"'/g' template.html > "$f"
+	sed "s@{{title}}@$title@g;s@{{body}}@$body@g" template.html > "$f"
 
 done
