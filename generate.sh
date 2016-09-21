@@ -6,17 +6,17 @@ set -ex
 SRC_DIR=$1
 DES_DIR=$2
 
-if [ ! -x $DES_DIR ];then
-    mkdir -p $DES_DIR
+if [ ! -x "$DES_DIR" ];then
+    mkdir -p "$DES_DIR"
 fi
 
-for f in `ls $SRC_DIR`
+for f in "$SRC_DIR"/*
 do
-    if [ -f $SRC_DIR/$f ];then
-        line_count=`cat $SRC_DIR/$f |wc -l`
+    if [ -f "$f" ];then
+        # line_count=$(cat $SRC_DIR/$f |wc -l)
 
-        title=`head -1 $SRC_DIR/$f`
-        lines=`tail -n 1 $SRC_DIR/$f | tr "\n" "\r"`
+        title=$(head -1 "$f")
+        lines=$(tail -n 1 "$f" | tr "\n" "\r")
         # if [ $line_count -ne 2 ]; then
         #     lines=`tail -$(($line_count - 2)) $SRC_DIR/$f | tr "\n" "\r"`
         # else
@@ -38,7 +38,9 @@ do
 
         # echo -e $tmplt | sed "s/{{body}}/""/"  > $DES_DIR/$f.html
 
-        cat ./template.html | sed "s/{{title}}/$title/; s/{{body}}/$lines/" | tr "\r" "\n" > $DES_DIR/${f%.*}.html
+        DEST_FILE=$(basename "$f")
+        # cat ./template.html | sed "s/{{title}}/$title/; s/{{body}}/$lines/" < ./template.html | tr "\r" "\n" > "$DES_DIR"/"${DEST_FILE%.*}".html
+        sed "s/{{title}}/$title/; s/{{body}}/$lines/" < ./template.html | tr "\r" "\n" > "$DES_DIR"/"${DEST_FILE%.*}".html
     fi
 done
 
