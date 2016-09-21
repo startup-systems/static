@@ -19,10 +19,10 @@ do
   cp template.html "$DEST"/"$filename".html
 
   # Replace
-#  sed -i "/{{title}}/c \\${headerline}1" "$DEST"/"$filename".html
-#  sed 's/{{title}}/'$headerline/ "$DEST"/"$filename".html
-  sed -i "s/{{title}}/${headerline}/" "$DEST"/"$filename".html
-  sed -i -e "s/{{body}}/${restofdoc}/g" "$DEST"/"$filename".html
+  /bin/sed -i "s/{{title}}/${headerline}/" "$DEST"/"$filename".html
+  /bin/sed -i -e "s|{{body}}|$restofdoc|g" "$DEST"/"$filename".html
+  /bin/sed -i -e "s|https[:]//[^ ]*.com|<a href=\"\0\">\0</a>|g" "$DEST"/"$filename".html
+#  /bin/sed -i -e "s|(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?|url|g" "$DEST"/"$filename".html
 
 done
 #cat template.html
