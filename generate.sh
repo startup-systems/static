@@ -21,14 +21,18 @@ do
         count=$((count+1))
     done < "$f"
     #Export using template
-    echo "<!DOCTYPE html> \
-            <html> \
-            <head> \
-                <meta charset=\"utf-8\"> \
-                <title>$title</title> \
-            </head> \
-            <body>$body</body> \
-            </html>" > "$2/$(basename -s .txt "$f").html"
+    echo "
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset=/"utf-8/">
+            <title>$title</title>
+          </head>
+          <body>
+            $body
+          </body>
+        </html>
+        "  > "$2/$(basename -s .txt "$f").html"
 done
 
 #Sources:
