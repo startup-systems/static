@@ -17,5 +17,5 @@ do
   cat template.html > "$2/$newf"
   title=$(head -n 1 $file)
   body=$(tail -n 1 $file)
-  sed -e 's/{{title}}/$title/g' -e 's#{{body}}#"$body"#g' $newf 
+  sed -e 's/{{title}}/${title}/g' -e "s#{{body}}#${body}#g" $2/$newf 
 done
