@@ -1,10 +1,4 @@
-#!/bin/bash
-
-set -ex
-
-# YOUR CODE HERE
-
-#!/bin/bash
+#!bin/bash
 
 set -ex
 
@@ -17,7 +11,7 @@ set -ex
 out_dir=$2
 in_dir=$1
 
-if [! -d "$out_dir" ] ; then
+if [ ! -d "$out_dir" ] ; then
    mkdir -p "$out_dir"
 fi
 
@@ -27,7 +21,7 @@ do
    filebody=$(tail -n +3 "$in_dir/$filename")
    get_txtname=$(basename "$filename" .txt)
    htmlname=$get_txtname.html
-   sed -e 's#{{title}}#' "$title" '/g' -e 's#{{body}}#' "$filebody" '#g' template.html > "$out_dir"/"$filename".html
+   sed -e 's#{{title}}#' "$title" '/g' -e 's#{{body}}#' "$filebody" '#g' template.html > "$out_dir"/"$htmlname".html
    
 done
 
