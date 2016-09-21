@@ -4,9 +4,9 @@ set -ex
 
 # YOUR CODE HERE
 
-if [ ! -d $2 ]
+if [ ! -d "$2" ]
 	then
-	mkdir $2
+	mkdir "$2"
 fi
 
 for post in $1/*
