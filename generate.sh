@@ -5,8 +5,8 @@ set -ex
 INPUT_TXT=$1
 OUTPUT_HTML=$2
 
-if [[ ! -d ${"OUTPUT_HTML"} ]]; then
-	mkdir -p $"OUTPUT_HTML"
+if [[ ! -d "${OUTPUT_HTML}" ]]; then
+	mkdir -p "$OUTPUT_HTML"
 fi
 
 TITLE_R="{{title}}"
@@ -18,5 +18,5 @@ for f in "$INPUT_TXT"/*
 		fname=$(basename "$f")
 		fbname=${fname%.*}
 		BODY=$(tail -n 1 "$f")
-		sed -e 's/'"$TITLE_R"'/'"$TITLE"'/' -e 's/'"$BODY_R"'/'"$BODY"'/' template.html > $"OUTPUT_HTML"/"$fbname".html
+		sed -e 's/'"$TITLE_R"'/'"$TITLE"'/' -e 's/'"$BODY_R"'/'"$BODY"'/' template.html > "$OUTPUT_HTML"/"$fbname".html
 	done
