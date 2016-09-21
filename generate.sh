@@ -54,7 +54,7 @@ for filename in $input/*.txt; do
         fi
 
       fi
-      i=$(($i+1))
+      i=$((i+1))
     done < "$filename"
 
 
