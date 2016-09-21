@@ -10,8 +10,8 @@ mkdir -p "$2"
 
 for file in "$1"/*
 do
-    fname=`basename "$file"`
-    printf "\nProcessing "$fname"...\n"
+    fname=$(basename "$file")
+    printf "\nProcessing %s...\n" "$fname"
     str=$(echo "$fname" | rev | cut -d"." -f2-  | rev)
     cp template.html "$2/$str.html"
     
@@ -19,7 +19,7 @@ do
     
     i=0
     
-    while IFS="\n" read -r line || [[ -n "$line" ]]; 
+    while IFS=$"\n" read -r line || [[ -n "$line" ]]; 
     do
         if [ "$line" != "" ]; then
             
