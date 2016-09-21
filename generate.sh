@@ -17,8 +17,8 @@ do
   filename=$(basename "${file}")
   filename=${filename%.*}
 
-  title=$(head -1 "$indir"/"$file")  
-  body=$(tail -1 "$indir"/"$file")
+  title=$(head -1 "$file")  
+  body=$(tail -1  "$file")
 
 # cat template.html > "$outdir/${filename}.html"#why did this not work????
 
