@@ -6,7 +6,8 @@ mkdir -p "$2"
 for f in $1/*
 do
     count=0
-    echo "Converting $f to $(basename -s .txt "$f").html"
+    filename=$(basename "$f" .txt)
+    echo "Converting $f to $filename.html"
     #Read line by line
     while IFS='' read -r temp || [[ -n "$temp" ]]; do
         #echo "Text read from file: $temp"
@@ -32,7 +33,7 @@ do
             $body
           </body>
         </html>
-        "  > "$2/$(basename -s .txt "$f").html"
+        "  > "$2/$filename.html"
 done
 
 #Sources:
