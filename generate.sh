@@ -12,7 +12,7 @@ output=$(cd "$2"; pwd)
 input=$(cd "$1"; pwd)
 #cd - 
 
-find "$inputdir" -name "*.txt" > temp.txt
+find "$input" -name "*.txt" > temp.txt
 
 while IFS='' read -r filename || [[ -n "$filename" ]]; do
 	bname=$(basename "$filename")
