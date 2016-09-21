@@ -14,5 +14,5 @@ do
         html_n=$(basename "$file" .txt)
         Head="$(head -n 1 "$file")"
         Tail="$(tail -n 3 "$file")"
-        sed 's#{{title}}#'"$Head"'#g;s#{{body}}#'"$Tail"'#g' template.html > "$file_output"/"$html_n".html
+        sed -e 's#{{title}}#"$Head"#;s#{{body}}#"$Tail"#' template.html > "$file_output"/"$html_n".html
 done
