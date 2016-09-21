@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 FILES="$1/*.txt"
 DEST=$2
 mkdir -p "$DEST"
