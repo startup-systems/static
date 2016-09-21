@@ -13,12 +13,12 @@ do
 	title=$(head -n1 "$f")
 	body=$(tail -n1 "$f")
 
-	html=$(sed -e "s/{{title}}/$title/" -e "s/{{body}}/$body/" template.html)
+	html=$(sed -e 's/{{title}}/"$title"/' -e 's/{{body}}/"$body"/' template.html)
 	# html=$(echo "$html" | sed "s/{{body}}/$body/")
 
 
 	f="${f%.*}".html # wihout extension
 	touch "$f"
-	echo "$html" >> "$f"
+	echo "$html" > "$f"
 
 done
