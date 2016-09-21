@@ -5,15 +5,15 @@ set -ex
 # YOUR CODE HERE
 # Any arguments appear as "$1", "$2", "$3" 
 
-indir="$1"
-outdir=$2
+input="$1"
+output=$2
 
-if [ ! -d "$outdir" ]; then
-  mkdir -p "$outdir"
+if [ ! -d "$output" ]; then
+  mkdir -p "$output"
 fi
 
 
-for file in "$indir"/*
+for file in "$input"/*
 do
   fname=$(basename "$file" .txt)
   newfile=$fname.html
