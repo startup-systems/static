@@ -3,10 +3,7 @@
 set -ex
 
 # YOUR CODE HERE
-inputfile=$1
-outputfile=$2
-
-mkdir -p $2
+mkdir -p "$2"
  
 for file in "$1"/*.txt
 do
