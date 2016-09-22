@@ -1,29 +1,11 @@
-#!/bin/bash
-# ./generate.sh examples/simple/ output/
-# set -ex
-
-# YOUR CODE HERE
-input_dir=$1
-output_dir=$2
-if [ ! -d "$output_dir" ]; then
-	mkdir -p "$output_dir"
-fi
-
-
-for f in "$input_dir"/*
+src=$1
+des=$2
+mkdir -p "$des"
+  
+for file in $src/*.txt
 do
-	title=$(head -n1 "$f")
-	body=$(tail -n1 "$f")
-
-	# html=$(echo "$html" | sed "s/{{body}}/$body/")
-
-	f_name=$(basename "$f" .txt).html # without path
-	# f_name="${f%.*}".html # wihout extension
-	# f_name="$output_dir$f_name" # attch output path
-	# sed -e 's/{{title}}/"$title"/g' 's/{{body}}/'"$body"'/g' template.html > "$f"
-	sed "s@{{title}}@$title@g;s@{{body}}@$body@g" template.html > "$output_dir$f_name"
-
+	title="$(head -n 1 "$file")"
+	body="$(tail -n +3 "$file")"
+    filename="$(basename "$file" .txt)"
+	sed 's#{{title}}#'"$title"'#g;s#{{body}}#'"$body"'#g' template.html > "$des"/"$filename".html
 done
-
-
-
