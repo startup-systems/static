@@ -1,11 +1,13 @@
 #!/bin/bash
 # ./generate.sh examples/simple/ output/
-set -ex
+# set -ex
 
 # YOUR CODE HERE
 input_dir=$1
 output_dir=$2
-mkdir -p "$output_dir" # if not exist
+if [ ! -d "$output_dir" ]; then
+	mkdir -p "$output_dir"
+fi
 
 
 for f in "$input_dir"/*
@@ -15,12 +17,13 @@ do
 
 	# html=$(echo "$html" | sed "s/{{body}}/$body/")
 
-	f=$(basename "$f")
-	f="${f%.*}".html # wihout extension
-	f="$output_dir$f"
-	touch "$f"
+	f_name=$(basename "$f" .txt).html # without path
+	# f_name="${f%.*}".html # wihout extension
+	# f_name="$output_dir$f_name" # attch output path
 	# sed -e 's/{{title}}/"$title"/g' 's/{{body}}/'"$body"'/g' template.html > "$f"
-	content=$(sed "s@{{title}}@$title@g;s@{{body}}@$body@g" template.html)
-	echo "$content" > "$f"
+	sed "s@{{title}}@$title@g;s@{{body}}@$body@g" template.html > "$output_dir$f_name"
 
 done
+
+
+
