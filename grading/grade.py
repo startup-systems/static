@@ -1,15 +1,12 @@
 # coding: utf-8
-"""Python script to automatically grade based on pull-requests. Usage:
-
-    python3 grade.py > grades.json
-
-"""
+"""Python script to automatically grade based on pull requests."""
 
 import functools
 import json
 import re
 import sys
 import requests
+from student import Student
 
 REPO = "startup-systems/static"
 GIT_PULLS = "https://api.github.com/repos/%s/pulls" % REPO
@@ -20,6 +17,8 @@ TRAVIS_BUILD_URL = "https://api.travis-ci.org/repos/" + REPO + "/builds?ids=%d"
 GIT_USER = 'sahuguet'
 # this provides read-only access, and is thus safe to commit
 GITHUB_TOKEN = 'd621ee8931b06586b015266ea682a6bbb3730d2f'
+
+SURVEY_DATA_PATH = sys.argv[1]
 
 
 @functools.lru_cache()
@@ -110,18 +109,23 @@ class PullRequest:
 
 if __name__ == '__main__':
     # We get all the pull-requests from the repo.
+    # TODO make sure to paginate
     pull_requests = github_request(GIT_PULLS)
     print("%d submission(s)." % len(pull_requests), file=sys.stderr)
+
+    students_by_github_username = Student.all_by_github_username(SURVEY_DATA_PATH)
 
     # To store all submissions
     SUBMISSIONS = []
 
-    # TODO filter to registered users
     # TODO take out the limit
     for r in pull_requests[0:2]:
         pr = PullRequest(r)
 
         user = pr.user()
+        if user not in students_by_github_username:
+            print("{} not enrolled.".format(user), file=sys.stderr)
+            continue
         print(user, file=sys.stderr)
 
         SUBMISSIONS.append({'user': user,
