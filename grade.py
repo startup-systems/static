@@ -82,25 +82,30 @@ class PullRequest:
         files = self.modified_files_data()
         return map(lambda x: x['filename'], files)
 
+    @functools.lru_cache()
+    def travis_log(self):
+        """Retrieves the raw log data from S3."""
+        job_id = self.travis_job_id()
+        if isinstance(job_id, int) is False:
+            pytest_report = {}
+            print("wrong S3 id for user %s." % self.user(), file=sys.stderr)
+            return pytest_report
+        url = TRAVIS_LOG_S3 % int(job_id)
+        print(url, file=sys.stderr)
+        response = requests.get(url)
+        return response.text
 
-def get_pytest_report_from_s3(job_id, user):
-    """Retrieves the raw log data from S3, based on job id."""
-    if isinstance(job_id, int) is False:
-        pytest_report = {}
-        print("wrong S3 id for user %s." % user, file=sys.stderr)
+    @functools.lru_cache()
+    def pytest_report(self):
+        log_data = self.travis_log().replace('\n', ' ').replace('\r', ' ')
+        pattern = re.compile('<MQkrXV>[^{]+([{].*[}]{2,3}) ', re.MULTILINE)
+        match = pattern.search(log_data)
+        # TODO ensure it's only found once
+        if match:
+            pytest_report = match.group(1)
+        else:
+            pytest_report = {}
         return pytest_report
-    url = TRAVIS_LOG_S3 % int(job_id)
-    print(url, file=sys.stderr)
-    response = requests.get(url)
-    log_data = response.text.replace('\n', ' ').replace('\r', ' ')
-    pattern = re.compile('<MQkrXV>[^{]+([{].*[}]{2,3}) ', re.MULTILINE)
-    match = pattern.search(log_data)
-    # TODO ensure it's only found once
-    if match:
-        pytest_report = match.group(1)
-    else:
-        pytest_report = {}
-    return pytest_report
 
 
 if __name__ == '__main__':
@@ -119,17 +124,15 @@ if __name__ == '__main__':
         user = pr.user()
         print(user, file=sys.stderr)
 
-        job_id = pr.travis_job_id()
         modified_files = pr.modified_files()
-        report = get_pytest_report_from_s3(job_id, user)
 
         SUBMISSIONS.append({'user': user,
                             'sha': pr.sha(),
                             'timestamp': pr.updated_at(),
-                            'modified_files': list(pr.modified_files()),
+                            'modified_files': list(modified_files),
                             'travis': pr.travis_url(),
-                            'travis_job_id': job_id,
-                            'pytest_report': report})
+                            'travis_job_id': pr.travis_job_id(),
+                            'pytest_report': pr.pytest_report()})
 
     # We output everything.
     results = json.dumps(SUBMISSIONS, sort_keys=True, indent=2)
