@@ -18,31 +18,42 @@ TRAVIS_LOG_S3 = "https://s3.amazonaws.com/archive.travis-ci.org/jobs/%d/log.txt"
 TRAVIS_BUILD_URL = "https://api.travis-ci.org/repos/" + REPO + "/builds?ids=%d"
 
 GIT_USER = 'sahuguet'
+# this provides read-only access, and is thus safe to commit
 GITHUB_TOKEN = 'd621ee8931b06586b015266ea682a6bbb3730d2f'
 
+class PullRequest:
+    def __init__(self, data):
+        self.data = data
 
-def get_travis_url_from_git(sha):
-    """Grabs the Travis URL from the git commit data."""
-    url = GIT_STATUSES_FROM_SHA % sha
-    print("status:", url, file=sys.stderr)
-    response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
-    data = response.text
-    statuses = json.loads(data)
-    for item in statuses:
-        if item['context'] == "continuous-integration/travis-ci/pr":
-            return item['target_url']
-    return None
+    def sha(self):
+        return self.data['head']['sha']
 
+    def updated_at(self):
+        return self.data['updated_at']
 
-def get_modified_files_from_git(sha):
-    """Grabs the set of modified files from the git commit data."""
-    url = GIT_COMMIT_FROM_SHA % sha
-    # print(url, file=sys.stderr)
-    response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
-    data = response.text
-    commit = json.loads(data)
-    return map(lambda x: x['filename'], commit['files'])
+    def user(self):
+        return self.data['user']['login']
 
+    def travis_url(self):
+        """Grabs the Travis URL from the git commit data."""
+        url = GIT_STATUSES_FROM_SHA % self.sha()
+        print("status:", url, file=sys.stderr)
+        response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
+        data = response.text
+        statuses = json.loads(data)
+        for item in statuses:
+            if item['context'] == "continuous-integration/travis-ci/pr":
+                return item['target_url']
+        return None
+
+    def modified_files(self):
+        """Grabs the set of modified files from the git commit data."""
+        url = GIT_COMMIT_FROM_SHA % self.sha()
+        # print(url, file=sys.stderr)
+        response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
+        data = response.text
+        commit = json.loads(data)
+        return map(lambda x: x['filename'], commit['files'])
 
 def get_pytest_report_from_s3(job_id, user):
     """Retrieves the raw log data from S3, based on job id."""
@@ -85,15 +96,13 @@ if __name__ == '__main__':
     SUBMISSIONS = []
 
     for r in pull_requests[0:]:
-        user = r['user']['login']
+        pr = PullRequest(r)
+        user = pr.user()
         print(user, file=sys.stderr)
-        timestamp = r['updated_at']
-        sha = r['head']['sha']
+        sha = pr.sha()
 
         # Get Travis data from Git pull-request.
-        travis_data = get_travis_url_from_git(sha)
-
-        modified_files = get_modified_files_from_git(sha)
+        travis_data = pr.travis_url()
         build_id = int(travis_data.split('/')[-1])
         print("Build_id %s for user %s." % (build_id, user), file=sys.stderr)
 
@@ -101,7 +110,9 @@ if __name__ == '__main__':
         job_id = get_travis_jobid(build_id)
         print(job_id, file=sys.stderr)
 
-        SUBMISSIONS.append({'user': user, 'sha': sha, 'timestamp': timestamp,
+        modified_files = pr.modified_files()
+
+        SUBMISSIONS.append({'user': user, 'sha': sha, 'timestamp': pr.updated_at(),
                             'modified_files': list(modified_files),
                             'travis': travis_data,
                             'travis_job_id': job_id,
