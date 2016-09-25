@@ -1,5 +1,9 @@
 # coding: utf-8
-"""Python script to automatically grade based on pull-requests. Usage: `python grade.py > grades.json`."""
+"""Python script to automatically grade based on pull-requests. Usage:
+
+    python grade.py > grades.json
+
+"""
 
 import json
 import re
@@ -33,7 +37,7 @@ def get_travis_url_from_git(sha):
 def get_modified_files_from_git(sha):
     """Grabs the set of modified files from the git commit data."""
     url = GIT_COMMIT_FROM_SHA % sha
-    #print(url, file=sys.stderr)
+    # print(url, file=sys.stderr)
     response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
     data = response.text
     commit = json.loads(data)
@@ -52,6 +56,7 @@ def get_pytest_report_from_s3(job_id, user):
     log_data = response.text.replace('\n', ' ').replace('\r', ' ')
     pattern = re.compile('<MQkrXV>[^{]+([{].*[}]{2,3}) ', re.MULTILINE)
     match = pattern.search(log_data)
+    # TODO ensure it's only found once
     if match:
         pytest_report = match.group(1)
     else:
