@@ -3,7 +3,6 @@ import github
 import json
 import re
 import requests
-import sys
 
 
 class PullRequest:
@@ -63,15 +62,18 @@ class PullRequest:
         return map(lambda x: x['filename'], files)
 
     @functools.lru_cache()
-    def travis_log(self):
-        """Retrieves the raw log data from S3."""
+    def travis_log_url(self):
         job_id = self.travis_job_id()
         if isinstance(job_id, int) is False:
             pytest_report = {}
-            print("wrong S3 id for user %s." % self.user(), file=sys.stderr)
+            print("wrong S3 id for user %s." % self.user())
             return pytest_report
-        url = "https://s3.amazonaws.com/archive.travis-ci.org/jobs/{:d}/log.txt".format(job_id)
-        print(url, file=sys.stderr)
+        return "https://s3.amazonaws.com/archive.travis-ci.org/jobs/{:d}/log.txt".format(job_id)
+
+    @functools.lru_cache()
+    def travis_log(self):
+        """Retrieves the raw log data from S3."""
+        url = self.travis_log_url()
         response = requests.get(url)
         return response.text
 

@@ -8,5 +8,5 @@ This folder is intended for staff. To get assignment grades:
 
     ```bash
     pip3 install requests
-    python3 grade.py path/to/responses.csv > grades.json
+    python3 grade.py path/to/responses.csv grades.csv
     ```

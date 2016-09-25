@@ -1,7 +1,6 @@
 import functools
 import json
 import requests
-import sys
 
 
 GIT_USER = 'sahuguet'
