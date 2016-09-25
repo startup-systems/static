@@ -124,12 +124,10 @@ if __name__ == '__main__':
         user = pr.user()
         print(user, file=sys.stderr)
 
-        modified_files = pr.modified_files()
-
         SUBMISSIONS.append({'user': user,
                             'sha': pr.sha(),
                             'timestamp': pr.updated_at(),
-                            'modified_files': list(modified_files),
+                            'modified_files': list(pr.modified_files()),
                             'travis': pr.travis_url(),
                             'travis_job_id': pr.travis_job_id(),
                             'pytest_report': pr.pytest_report()})
