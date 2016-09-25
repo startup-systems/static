@@ -36,12 +36,16 @@ class PullRequest:
         return self.data['user']['login']
 
     @functools.lru_cache()
-    def travis_url(self):
-        """Grabs the Travis URL from the git commit data."""
+    def statuses(self):
         url = self.data['statuses_url']
         response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
         data = response.text
-        statuses = json.loads(data)
+        return json.loads(data)
+
+    @functools.lru_cache()
+    def travis_url(self):
+        """Grabs the Travis URL from the git commit data."""
+        statuses = self.statuses()
         for item in statuses:
             if item['context'] == "continuous-integration/travis-ci/pr":
                 return item['target_url']
@@ -52,22 +56,30 @@ class PullRequest:
         return int(self.travis_url().split('/')[-1])
 
     @functools.lru_cache()
-    def travis_job_id(self):
+    def travis_build_data(self):
         url = TRAVIS_BUILD_URL % self.travis_build_id()
         headers = {'User-Agent': 'MyClient/1.0.0', 'Accept': 'application/vnd.travis-ci.2+json'}
         response = requests.get(url, headers=headers)
         data = response.text
-        builds = json.loads(data)['builds']
+        return json.loads(data)
+
+    @functools.lru_cache()
+    def travis_job_id(self):
+        builds = self.travis_build_data()['builds']
         print(json.dumps(builds, indent=2, sort_keys=True), file=sys.stderr)
         return builds[0]['job_ids'][0]
 
     @functools.lru_cache()
-    def modified_files(self):
+    def modified_files_data(self):
         """Grabs the set of modified files from the git commit data."""
         url = PULL_REQUEST_FILES_URL % self.data['number']
         response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
         data = response.text
-        files = json.loads(data)
+        return json.loads(data)
+
+    @functools.lru_cache()
+    def modified_files(self):
+        files = self.modified_files_data()
         return map(lambda x: x['filename'], files)
 
 
@@ -101,6 +113,7 @@ if __name__ == '__main__':
     SUBMISSIONS = []
 
     # TODO filter to registered users
+    # TODO take out the limit
     for r in pull_requests[0:2]:
         pr = PullRequest(r)
         user = pr.user()
