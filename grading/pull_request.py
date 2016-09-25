@@ -82,7 +82,7 @@ class PullRequest:
         match = pattern.search(log_data)
         # TODO ensure it's only found once
         if match:
-            pytest_report = match.group(1)
+            report = match.group(1)
+            return json.loads(report)
         else:
-            pytest_report = {}
-        return pytest_report
+            return None
