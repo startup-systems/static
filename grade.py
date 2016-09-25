@@ -22,6 +22,13 @@ GIT_USER = 'sahuguet'
 GITHUB_TOKEN = 'd621ee8931b06586b015266ea682a6bbb3730d2f'
 
 
+@functools.lru_cache()
+def github_request(url):
+    response = requests.get(url, auth=(GIT_USER, GITHUB_TOKEN))
+    body = response.text
+    return json.loads(body)
+
+
 class PullRequest:
     def __init__(self, data):
         self.data = data
@@ -37,10 +44,7 @@ class PullRequest:
 
     @functools.lru_cache()
     def statuses(self):
-        url = self.data['statuses_url']
-        response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
-        data = response.text
-        return json.loads(data)
+        return github_request(self.data['statuses_url'])
 
     @functools.lru_cache()
     def travis_url(self):
@@ -66,16 +70,12 @@ class PullRequest:
     @functools.lru_cache()
     def travis_job_id(self):
         builds = self.travis_build_data()['builds']
-        print(json.dumps(builds, indent=2, sort_keys=True), file=sys.stderr)
         return builds[0]['job_ids'][0]
 
     @functools.lru_cache()
     def modified_files_data(self):
-        """Grabs the set of modified files from the git commit data."""
         url = PULL_REQUEST_FILES_URL % self.data['number']
-        response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
-        data = response.text
-        return json.loads(data)
+        return github_request(url)
 
     @functools.lru_cache()
     def modified_files(self):
@@ -105,8 +105,7 @@ def get_pytest_report_from_s3(job_id, user):
 
 if __name__ == '__main__':
     # We get all the pull-requests from the repo.
-    response = requests.get(GIT_PULLS, auth=('sahuguet', GITHUB_TOKEN))
-    pull_requests = json.loads(response.text)
+    pull_requests = github_request(GIT_PULLS)
     print("%d submission(s)." % len(pull_requests), file=sys.stderr)
 
     # To store all submissions
@@ -116,21 +115,21 @@ if __name__ == '__main__':
     # TODO take out the limit
     for r in pull_requests[0:2]:
         pr = PullRequest(r)
+
         user = pr.user()
         print(user, file=sys.stderr)
 
         job_id = pr.travis_job_id()
         modified_files = pr.modified_files()
-        sha = pr.sha()
-        travis_url = pr.travis_url()
+        report = get_pytest_report_from_s3(job_id, user)
 
         SUBMISSIONS.append({'user': user,
-                            'sha': sha,
+                            'sha': pr.sha(),
                             'timestamp': pr.updated_at(),
-                            'modified_files': list(modified_files),
-                            'travis': travis_url,
+                            'modified_files': list(pr.modified_files()),
+                            'travis': pr.travis_url(),
                             'travis_job_id': job_id,
-                            'pytest_report': get_pytest_report_from_s3(job_id, user)})
+                            'pytest_report': report})
 
     # We output everything.
     results = json.dumps(SUBMISSIONS, sort_keys=True, indent=2)
