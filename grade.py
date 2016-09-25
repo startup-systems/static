@@ -13,8 +13,7 @@ import requests
 
 REPO = "startup-systems/static"
 GIT_PULLS = "https://api.github.com/repos/%s/pulls" % REPO
-GIT_STATUSES_FROM_SHA = "https://api.github.com/repos/" + REPO + "/commits/%s/statuses"
-GIT_COMMIT_FROM_SHA = "https://api.github.com/repos/" + REPO + "/commits/%s"
+PULL_REQUEST_FILES_URL = "https://api.github.com/repos/" + REPO + "/pulls/%d/files"
 TRAVIS_LOG_S3 = "https://s3.amazonaws.com/archive.travis-ci.org/jobs/%d/log.txt"
 TRAVIS_BUILD_URL = "https://api.travis-ci.org/repos/" + REPO + "/builds?ids=%d"
 
@@ -39,7 +38,7 @@ class PullRequest:
     @functools.lru_cache()
     def travis_url(self):
         """Grabs the Travis URL from the git commit data."""
-        url = GIT_STATUSES_FROM_SHA % self.sha()
+        url = self.data['statuses_url']
         response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
         data = response.text
         statuses = json.loads(data)
@@ -65,11 +64,11 @@ class PullRequest:
     @functools.lru_cache()
     def modified_files(self):
         """Grabs the set of modified files from the git commit data."""
-        url = GIT_COMMIT_FROM_SHA % self.sha()
+        url = PULL_REQUEST_FILES_URL % self.data['number']
         response = requests.get(url, auth=('sahuguet', GITHUB_TOKEN))
         data = response.text
-        commit = json.loads(data)
-        return map(lambda x: x['filename'], commit['files'])
+        files = json.loads(data)
+        return map(lambda x: x['filename'], files)
 
 
 def get_pytest_report_from_s3(job_id, user):
@@ -101,6 +100,7 @@ if __name__ == '__main__':
     # To store all submissions
     SUBMISSIONS = []
 
+    # TODO filter to registered users
     for r in pull_requests[0:2]:
         pr = PullRequest(r)
         user = pr.user()
