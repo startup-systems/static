@@ -4,6 +4,12 @@ import re
 import requests
 
 
+TEST_DELIMITER = '<MQkrXV>'
+
+pattern = "%s[^{]+([{].*[}]{2,3}) " % TEST_DELIMITER
+RESULTS_REGEX = re.compile(pattern, re.MULTILINE)
+
+
 class Build:
     def __init__(self, repo, build_id):
         self.repo = repo
@@ -41,11 +47,9 @@ class Build:
     @functools.lru_cache()
     def pytest_report(self):
         log_data = self.log().replace('\n', ' ').replace('\r', ' ')
-        pattern = re.compile('<MQkrXV>[^{]+([{].*[}]{2,3}) ', re.MULTILINE)
-        match = pattern.search(log_data)
-        # TODO ensure it's only found once
-        if match:
-            report = match.group(1)
+        matches = RESULTS_REGEX.findall(log_data)
+        if len(matches) == 1:
+            report = matches[0]
             return json.loads(report)
         else:
             return None
