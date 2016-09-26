@@ -35,7 +35,7 @@ if __name__ == '__main__':
         for r in pull_requests[0:20]:
             pr = PullRequest(r)
 
-            github_username = pr.user()
+            github_username = pr.username()
             print(github_username, end=': ')
 
             student = students_by_github_username.get(github_username)

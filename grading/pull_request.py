@@ -13,7 +13,7 @@ class PullRequest:
     def updated_at(self):
         return self.data['updated_at']
 
-    def user(self):
+    def username(self):
         return self.data['user']['login'].lower()
 
     def base_repo(self):
@@ -23,14 +23,17 @@ class PullRequest:
     def statuses(self):
         return github.api_request(self.data['statuses_url'])
 
+    def get_status(self, context):
+        statuses = self.statuses()
+        return next(s for s in statuses if s['context'] == context)
+
     @functools.lru_cache()
     def travis_url(self):
         """Grabs the Travis URL from the git commit data."""
-        statuses = self.statuses()
-        for item in statuses:
-            if item['context'] == "continuous-integration/travis-ci/pr":
-                return item['target_url']
-        return None
+        status = self.get_status('continuous-integration/travis-ci/pr')
+        if status is None:
+            return None
+        return status['target_url']
 
     @functools.lru_cache()
     def travis_build_id(self):
@@ -51,3 +54,9 @@ class PullRequest:
         repo = self.base_repo()
         build_id = self.travis_build_id()
         return travis.Build(repo, build_id)
+
+    def code_climate_passed(self):
+        status = self.get_status('codeclimate')
+        if status is None:
+            return None
+        return status['state'] == 'success'

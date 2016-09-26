@@ -2,14 +2,14 @@ from pytest_ext import TestDef
 
 
 CODE_CLIMATE_SCORE = 5
-TESTS = TestDef.collect('..')
+PYTESTS = TestDef.collect('..')
 TOTAL_BASE_SCORE = 100
 
 
 def verify_totals():
     """Ensure that the base scores sum to {}.""".format(TOTAL_BASE_SCORE)
     total = CODE_CLIMATE_SCORE
-    for test_def in TESTS:
+    for test_def in PYTESTS:
         if not test_def.extra_credit:
             total += test_def.score
 
@@ -29,7 +29,6 @@ class TestResult:
 
 
 class Scorer:
-    # TODO check for Code Climate results
     def __init__(self, pull_request):
         self.pull_request = pull_request
 
@@ -43,10 +42,13 @@ class Scorer:
         return {r.name: r for r in results}
 
     def compute(self):
-        result_by_test_name = self.result_by_test_name()
-
         total_score = 0
-        for test_def in TESTS:
+
+        if self.pull_request.code_climate_passed():
+            total_score += CODE_CLIMATE_SCORE
+
+        result_by_test_name = self.result_by_test_name()
+        for test_def in PYTESTS:
             test_result = result_by_test_name[test_def.name]
             if test_result.passed():
                 total_score += test_def.score
