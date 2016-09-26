@@ -45,11 +45,11 @@ def output_dir():
 
 @pytest.fixture
 def populated_output_dir(populated_input_dir, output_dir):
-    print("DEBUG")
     result = helpers.generate(populated_input_dir, output_dir)
     assert result.returncode == 0
     yield output_dir
 
+@pytest.mark.score(25)
 def test_files(input_files, populated_output_dir):
     input_filenames = ["post{}.html".format(f.file_number) for f in input_files]
     output_filenames = helpers.get_files(populated_output_dir)

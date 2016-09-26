@@ -52,14 +52,16 @@ then `output/postone.html` should look like
 
 ## Requirements
 
+Score percentage is in **bold**.
+
 * The script takes two arguments:
     1. The input directory
     1. The output directory
-* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory. It should work with any number of input files, in any directory, with any arbitrary names.
-* The first line of each text file is the title, then there's an empty line, then the rest is the body.
+* Given an input directory of plain text files, your script should convert each one to an HTML page the output directory. It should work with any number of input files, in any directory, with any arbitrary names. (**50%**)
+* The first line of each text file is the title (**20%**), then there's an empty line, then the rest is the body. (**20%**)
 * The generated pages should use the provided [template HTML file](template.html), replacing the `{{title}}` and `{{body}}`.
-* If the output directory doesn't exist, create it and any missing parent directories (a.k.a. "recursively").
-* All of the tests + Code Climate checks should pass.
+* If the output directory doesn't exist, create it and any missing parent directories (a.k.a. "recursively"). (**5%**)
+* All of the tests + Code Climate checks (**5%**) should pass.
     * `xfail` and `XPASS` correspond to the tests for the extra credit, so don't worry about them otherwise.
 
 Fill in the [`generate.sh`](generate.sh) shell script with your code. You should not need to modify any other files.

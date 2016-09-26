@@ -18,6 +18,7 @@ def test_no_errors():
         result = generate(tmpdirname)
         assert result.returncode == 0
 
+@pytest.mark.score(25)
 def test_files(output_dir):
     files = helpers.get_files(output_dir)
     assert files == ['postone.html', 'some-other-post.html']
@@ -49,6 +50,7 @@ def test_subdirectory_creation():
         files = helpers.get_files(dest)
         assert files == ['postone.html', 'some-other-post.html']
 
+@pytest.mark.score(5)
 def test_recursive_directory_creation():
     with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
         dest = os.path.join(tmpdirname, 'subdir', 'subsubdir')
