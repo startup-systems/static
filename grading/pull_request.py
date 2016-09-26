@@ -16,7 +16,7 @@ class PullRequest:
         return self.data['updated_at']
 
     def user(self):
-        return self.data['user']['login']
+        return self.data['user']['login'].lower()
 
     def base_repo(self):
         return self.data['base']['repo']['full_name']

@@ -5,7 +5,7 @@ class Student:
     def __init__(self, row):
         """Takes a `row` as a dictionary."""
         self.net_id = row['NetID']
-        self.github_username = row['GitHub username']
+        self.github_username = row['GitHub username'].lower()
 
     @classmethod
     def read_all(cls, csv_path):
