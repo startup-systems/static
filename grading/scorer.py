@@ -19,7 +19,7 @@ def verify_totals():
 verify_totals()
 
 
-class TestResult:
+class PytestResult:
     def __init__(self, pytest_data):
         self.name = pytest_data['name']
         self.outcome = pytest_data['outcome'].lower()
@@ -35,7 +35,7 @@ class Scorer:
     def pytest_results(self):
         pytest_report = self.pull_request.travis_build().pytest_report()
         tests = pytest_report['report']['tests']
-        return [TestResult(r) for r in tests]
+        return [PytestResult(r) for r in tests]
 
     def result_by_test_name(self):
         results = self.pytest_results()

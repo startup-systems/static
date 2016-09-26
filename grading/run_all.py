@@ -8,12 +8,14 @@ from pull_request import PullRequest
 from student import Student
 
 
+REPO = "startup-systems/static"
+
 SURVEY_DATA_PATH = sys.argv[1]
 OUTPUT_PATH = sys.argv[2]
 
 
 if __name__ == '__main__':
-    pull_requests = PullRequest.all(grader.REPO)
+    pull_requests = PullRequest.all(REPO)
     students_by_github_username = Student.all_by_github_username(SURVEY_DATA_PATH)
 
     with open(OUTPUT_PATH, 'w', newline='') as csvfile:
