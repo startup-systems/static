@@ -2,31 +2,18 @@
 """Python script to automatically grade based on pull requests."""
 
 import csv
-import github
+import grader
 import sys
 from pull_request import PullRequest
-import requests
-from scorer import Scorer
 from student import Student
 
-REPO = "startup-systems/static"
 
 SURVEY_DATA_PATH = sys.argv[1]
 OUTPUT_PATH = sys.argv[2]
 
 
-def grade(pr):
-    print(pr.travis_build().url())
-    pr.check_test_modifications()
-
-    scorer = Scorer(pr)
-    score = scorer.compute()
-    print("score:", score)
-
-    return score
-
 if __name__ == '__main__':
-    pull_requests = PullRequest.all(REPO)
+    pull_requests = PullRequest.all(grader.REPO)
     students_by_github_username = Student.all_by_github_username(SURVEY_DATA_PATH)
 
     # TODO include (zero) grades for students who don't have an open pull request
@@ -51,7 +38,7 @@ if __name__ == '__main__':
             print(pr.url() + '/files')
 
             net_id = student.net_id
-            score = grade(pr)
+            score = grader.grade(pr)
             # TODO put in reasoning for score
             resultwriter.writerow([net_id, score, ""])
 
