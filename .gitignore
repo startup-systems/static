@@ -1,6 +1,7 @@
 __pycache__/
 .cache/
 *.csv
+*.log
 *.pyc
 output/
 report.json

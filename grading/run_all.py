@@ -16,7 +16,6 @@ if __name__ == '__main__':
     pull_requests = PullRequest.all(grader.REPO)
     students_by_github_username = Student.all_by_github_username(SURVEY_DATA_PATH)
 
-    # TODO include (zero) grades for students who don't have an open pull request
     with open(OUTPUT_PATH, 'w', newline='') as csvfile:
         resultwriter = csv.writer(csvfile)
         # this matches the grading spreadsheet template provided by CMS
