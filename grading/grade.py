@@ -6,6 +6,7 @@ import github
 import sys
 from pull_request import PullRequest
 import requests
+from scorer import Scorer
 from student import Student
 
 REPO = "startup-systems/static"
@@ -42,6 +43,10 @@ if __name__ == '__main__':
                 print("not enrolled.")
                 continue
             print(pr.travis_log_url())
+            # TODO ensure test files werent modified
+
+            scorer = Scorer(pr)
+            scorer.compute()
 
             net_id = student.net_id
             # TODO put in actual score
