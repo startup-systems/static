@@ -49,8 +49,10 @@ class Scorer:
 
         result_by_test_name = self.result_by_test_name()
         for test_def in PYTESTS:
-            test_result = result_by_test_name[test_def.name]
-            if test_result.passed():
+            test_result = result_by_test_name.get(test_def.name)
+            if test_result is None:
+                print("WARNING: test not found - they probably need to pull the latest changes.")
+            elif test_result.passed():
                 total_score += test_def.score
 
         return total_score

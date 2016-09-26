@@ -31,12 +31,12 @@ if __name__ == '__main__':
 
             student = students_by_github_username.get(github_username)
             if student is None:
-                print("not enrolled.")
+                print("WARNING: not enrolled.")
                 continue
 
             net_id = student.net_id
             if net_id in submitted_net_ids:
-                print("has a more recent submission")
+                print("WARNING: has a more recent submission")
                 continue
 
             print(pr.url() + '/files')
