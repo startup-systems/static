@@ -19,6 +19,9 @@ class PullRequest:
     def base_repo(self):
         return self.data['base']['repo']['full_name']
 
+    def url(self):
+        return self.data['html_url']
+
     @functools.lru_cache()
     def statuses(self):
         return github.api_request(self.data['statuses_url'])
@@ -60,3 +63,17 @@ class PullRequest:
         if status is None:
             return None
         return status['state'] == 'success'
+
+    def check_test_modifications(self):
+        modified_files = self.modified_files()
+        for path in modified_files:
+            if self.test_path(path):
+                print("WARNING: {} was modified.".format(path))
+
+    @staticmethod
+    def test_path(path):
+        return (not path.endswith('.pyc')) and (
+            path.startswith('tests/') or
+            path == '.codeclimate.yml' or
+            path == '.travis.yml'
+        )

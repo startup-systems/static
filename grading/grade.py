@@ -36,14 +36,17 @@ if __name__ == '__main__':
             pr = PullRequest(r)
 
             github_username = pr.username()
-            print(github_username, end=': ')
+            print('-------')
+            print(github_username)
 
             student = students_by_github_username.get(github_username)
             if student is None:
                 print("not enrolled.")
                 continue
             print(pr.travis_build().log_url())
-            # TODO ensure test files werent modified
+
+            print(pr.url())
+            pr.check_test_modifications()
 
             scorer = Scorer(pr)
             score = scorer.compute()
