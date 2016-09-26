@@ -17,13 +17,12 @@ if __name__ == '__main__':
     students_by_github_username = Student.all_by_github_username(SURVEY_DATA_PATH)
 
     # TODO include (zero) grades for students who don't have an open pull request
-    # TODO if a student has multiple pull requests, use the more recent one
     with open(OUTPUT_PATH, 'w', newline='') as csvfile:
         resultwriter = csv.writer(csvfile)
         # this matches the grading spreadsheet template provided by CMS
         resultwriter.writerow(["NetID", "Grade", "Add Comments"])
 
-        num_submissions = 0
+        submitted_net_ids = set()
         for pr in pull_requests:
             print('-------')
 
@@ -35,14 +34,18 @@ if __name__ == '__main__':
                 print("not enrolled.")
                 continue
 
+            net_id = student.net_id
+            if net_id in submitted_net_ids:
+                print("has a more recent submission")
+                continue
+
             print(pr.url() + '/files')
 
-            net_id = student.net_id
             score = grader.grade(pr)
             # TODO put in reasoning for score
             resultwriter.writerow([net_id, score, ""])
 
-            num_submissions += 1
+            submitted_net_ids.add(net_id)
 
         print('-------')
-        print("Number of submissions:", num_submissions)
+        print("Number of submissions:", len(submitted_net_ids))
