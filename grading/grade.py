@@ -39,10 +39,10 @@ if __name__ == '__main__':
             print(github_username, end=': ')
 
             student = students_by_github_username.get(github_username)
-            if student == None:
+            if student is None:
                 print("not enrolled.")
                 continue
-            print(pr.travis_log_url())
+            print(pr.travis_build().log_url())
             # TODO ensure test files werent modified
 
             scorer = Scorer(pr)

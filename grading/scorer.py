@@ -27,13 +27,14 @@ class TestResult:
     def passed(self):
         return self.outcome == 'passed' or self.outcome == 'xpass'
 
+
 class Scorer:
     # TODO check for Code Climate results
     def __init__(self, pull_request):
         self.pull_request = pull_request
 
     def pytest_results(self):
-        pytest_report = self.pull_request.pytest_report()
+        pytest_report = self.pull_request.travis_build().pytest_report()
         tests = pytest_report['report']['tests']
         return [TestResult(r) for r in tests]
 
