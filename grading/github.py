@@ -12,11 +12,13 @@ GITHUB_TOKEN = 'd621ee8931b06586b015266ea682a6bbb3730d2f'
 def raw_api_request(url):
     return requests.get(url, auth=(GIT_USER, GITHUB_TOKEN))
 
+
 @functools.lru_cache()
 def api_request(url):
     response = raw_api_request(url)
     body = response.text
     return json.loads(body)
+
 
 def iter_request(url):
     """Generator for GitHub API requests who respond with a `Link` header."""

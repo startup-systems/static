@@ -15,6 +15,16 @@ SURVEY_DATA_PATH = sys.argv[1]
 OUTPUT_PATH = sys.argv[2]
 
 
+def grade(pr):
+    print(pr.travis_build().url())
+    pr.check_test_modifications()
+
+    scorer = Scorer(pr)
+    score = scorer.compute()
+    print("score:", score)
+
+    return score
+
 if __name__ == '__main__':
     pull_requests = PullRequest.all(REPO)
     students_by_github_username = Student.all_by_github_username(SURVEY_DATA_PATH)
@@ -28,24 +38,20 @@ if __name__ == '__main__':
 
         num_submissions = 0
         for pr in pull_requests:
-            github_username = pr.username()
             print('-------')
+
+            github_username = pr.username()
             print(github_username)
 
             student = students_by_github_username.get(github_username)
             if student is None:
                 print("not enrolled.")
                 continue
-            print(pr.travis_build().log_url())
 
-            print(pr.url())
-            pr.check_test_modifications()
-
-            scorer = Scorer(pr)
-            score = scorer.compute()
-            print("score:", score)
+            print(pr.url() + '/files')
 
             net_id = student.net_id
+            score = grade(pr)
             # TODO put in reasoning for score
             resultwriter.writerow([net_id, score, ""])
 

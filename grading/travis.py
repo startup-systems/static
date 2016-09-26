@@ -15,6 +15,9 @@ class Build:
         self.repo = repo
         self.build_id = build_id
 
+    def url(self):
+        return "https://travis-ci.org/{}/builds/{:d}".format(self.repo, self.build_id)
+
     @functools.lru_cache()
     def build_data(self):
         url = "https://api.travis-ci.org/repos/{}/builds?ids={:d}".format(self.repo, self.build_id)
