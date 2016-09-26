@@ -32,7 +32,7 @@ if __name__ == '__main__':
         resultwriter.writerow(["NetID", "Grade", "Add Comments"])
 
         # TODO take out the limit
-        for r in pull_requests[0:2]:
+        for r in pull_requests[0:10]:
             pr = PullRequest(r)
 
             github_username = pr.user()
@@ -46,8 +46,9 @@ if __name__ == '__main__':
             # TODO ensure test files werent modified
 
             scorer = Scorer(pr)
-            scorer.compute()
+            score = scorer.compute()
+            print("score:", score)
 
             net_id = student.net_id
-            # TODO put in actual score
-            resultwriter.writerow([net_id, 1, ""])
+            # TODO put in reasoning for score
+            resultwriter.writerow([net_id, score, ""])
