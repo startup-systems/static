@@ -9,7 +9,7 @@ class TestCollector:
 
 class TestDef:
     def __init__(self, test):
-        self.test_id = test.nodeid
+        self.name = test.nodeid
         self.extra_credit = 'xfail' in test.keywords
 
         score_config = test.keywords.get('score')

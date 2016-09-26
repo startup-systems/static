@@ -70,7 +70,7 @@ Fill in the [`generate.sh`](generate.sh) shell script with your code. You should
 
 Too easy? Try the following:
 
-* Any URLs should be hyperlinked. For example:
+* Any URLs should be hyperlinked (**10%**). For example:
 
     ```
     https://someurl.com/somepath
@@ -82,7 +82,7 @@ Too easy? Try the following:
     <a href="https://someurl.com/somepath">https://someurl.com/somepath</a>
     ```
 
-* Any blank lines followed by more content should create a new paragraph. For example:
+* Any blank lines followed by more content should create a new paragraph (**10%**). For example:
 
     ```
     Some text.

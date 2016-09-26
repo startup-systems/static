@@ -25,6 +25,7 @@ def test_files(output_dir):
     assert files == ['post.html']
 
 @pytest.mark.xfail
+@pytest.mark.score(10)
 def test_body(output_dir):
     files = helpers.get_files(output_dir)
     post_path = os.path.join(output_dir, files[0])

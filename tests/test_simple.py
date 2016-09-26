@@ -23,6 +23,7 @@ def test_files(output_dir):
     files = helpers.get_files(output_dir)
     assert files == ['postone.html', 'some-other-post.html']
 
+@pytest.mark.score(10)
 def test_titles(output_dir):
     files = helpers.get_files(output_dir)
 
@@ -32,6 +33,7 @@ def test_titles(output_dir):
     otherpostpath = os.path.join(output_dir, files[1])
     helpers.check_title(otherpostpath, "Some Other Post Title")
 
+@pytest.mark.score(10)
 def test_bodies(output_dir):
     files = helpers.get_files(output_dir)
 
@@ -41,6 +43,7 @@ def test_bodies(output_dir):
     otherpostpath = os.path.join(output_dir, files[1])
     helpers.check_body_text(otherpostpath, "This is the body of the other post.")
 
+@pytest.mark.score(3)
 def test_subdirectory_creation():
     with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
         dest = os.path.join(tmpdirname, 'subdir')
@@ -50,7 +53,7 @@ def test_subdirectory_creation():
         files = helpers.get_files(dest)
         assert files == ['postone.html', 'some-other-post.html']
 
-@pytest.mark.score(5)
+@pytest.mark.score(2)
 def test_recursive_directory_creation():
     with tempfile.TemporaryDirectory(suffix='-static') as tmpdirname:
         dest = os.path.join(tmpdirname, 'subdir', 'subsubdir')
