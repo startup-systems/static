@@ -77,3 +77,12 @@ class PullRequest:
             path == '.codeclimate.yml' or
             path == '.travis.yml'
         )
+
+    @classmethod
+    def all(cls, repo):
+        """Generator that fetches PullRequest instances."""
+        url = "https://api.github.com/repos/{}/pulls".format(repo)
+        pull_requests_data = github.iter_request(url)
+        for pr_data in pull_requests_data:
+            pr = cls(pr_data)
+            yield pr

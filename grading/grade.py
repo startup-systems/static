@@ -10,18 +10,13 @@ from scorer import Scorer
 from student import Student
 
 REPO = "startup-systems/static"
-GIT_PULLS = "https://api.github.com/repos/%s/pulls" % REPO
 
 SURVEY_DATA_PATH = sys.argv[1]
 OUTPUT_PATH = sys.argv[2]
 
 
 if __name__ == '__main__':
-    # We get all the pull requests from the repo.
-    # TODO make sure to paginate
-    pull_requests = github.api_request(GIT_PULLS)
-    print("%d submission(s)." % len(pull_requests))
-
+    pull_requests = PullRequest.all(REPO)
     students_by_github_username = Student.all_by_github_username(SURVEY_DATA_PATH)
 
     # TODO include (zero) grades for students who don't have an open pull request
@@ -31,10 +26,8 @@ if __name__ == '__main__':
         # this matches the grading spreadsheet template provided by CMS
         resultwriter.writerow(["NetID", "Grade", "Add Comments"])
 
-        # TODO take out the limit
-        for r in pull_requests[0:20]:
-            pr = PullRequest(r)
-
+        num_submissions = 0
+        for pr in pull_requests:
             github_username = pr.username()
             print('-------')
             print(github_username)
@@ -55,3 +48,8 @@ if __name__ == '__main__':
             net_id = student.net_id
             # TODO put in reasoning for score
             resultwriter.writerow([net_id, score, ""])
+
+            num_submissions += 1
+
+        print('-------')
+        print("Number of submissions:", num_submissions)
