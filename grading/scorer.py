@@ -1,7 +1,23 @@
 from pytest_ext import TestDef
 
+
+CODE_CLIMATE_SCORE = 5
 TESTS = TestDef.collect('..')
-# TODO ensure scores sum to 100
+TOTAL_BASE_SCORE = 100
+
+
+def verify_totals():
+    """Ensure that the base scores sum to {}.""".format(TOTAL_BASE_SCORE)
+    total = CODE_CLIMATE_SCORE
+    for test_def in TESTS:
+        if not test_def.extra_credit:
+            total += test_def.score
+
+    if total != TOTAL_BASE_SCORE:
+        raise ValueError("Scores for non-extra-credit tests: {}".format(total))
+
+verify_totals()
+
 
 class TestResult:
     def __init__(self, pytest_data):

@@ -55,6 +55,7 @@ def test_files(input_files, populated_output_dir):
     output_filenames = helpers.get_files(populated_output_dir)
     assert output_filenames == input_filenames
 
+@pytest.mark.score(10)
 def test_titles(input_files, populated_output_dir):
     output_files = helpers.get_files(populated_output_dir)
 
@@ -62,6 +63,7 @@ def test_titles(input_files, populated_output_dir):
         path = os.path.join(populated_output_dir, "post{}.html".format(input_file.file_number))
         helpers.check_title(path, input_file.title)
 
+@pytest.mark.score(10)
 def test_bodies(input_files, populated_output_dir):
     output_files = helpers.get_files(populated_output_dir)
 

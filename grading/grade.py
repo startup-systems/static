@@ -32,7 +32,7 @@ if __name__ == '__main__':
         resultwriter.writerow(["NetID", "Grade", "Add Comments"])
 
         # TODO take out the limit
-        for r in pull_requests[0:10]:
+        for r in pull_requests[0:20]:
             pr = PullRequest(r)
 
             github_username = pr.user()
