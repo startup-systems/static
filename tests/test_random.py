@@ -16,7 +16,7 @@ class InputFile:
         with open(filepath, 'w') as f:
             f.write(self.title)
             f.write("\n\n")
-            f.write(self.body)
+            f.write(self.body+"\n")
 
 @pytest.fixture
 def input_dir():
