@@ -1,0 +1,2 @@
+/vagrant/static/examples/simple/postone.txt
+/vagrant/static/examples/simple/some-other-post.txt
