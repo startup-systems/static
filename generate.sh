@@ -16,8 +16,8 @@ output=$2
 #adjust name and create file
 for filename in "$input"/*;
 	do
-		filE=$(basename "$filename" .txt | cut -d -f1)
-		filE="$filE.html"
+		filE=$(basename "$filename" .txt)
+		filE="${filE%.*}"
 		title=$(head -n 1 "$filename")
 		body=$(tail -n+3 "$filename")
 		sed -e 's/{{title}}/'"$title"'/' -e 's/{{body}}/'"$body"'/' template.html >> "$output"/"$filE"
