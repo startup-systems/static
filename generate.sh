@@ -4,18 +4,10 @@
 
 set -ex
 inputdir=$1
-outputdir=$2
-made_directory=$3 #if not directory exists, need to make one
+outputdir=$2 
 
-if [! -d "$outputdir"]; then #first check if directory exists, if not, need to make one
-	mkdir -p "$made_directory"
-fi 
 for file in "$inputdir"/*.txt; do #for a file in inputdir, 
-	filename="$(basename "$file" ".txt")" #rename with basename and make sure is a text file
-	head=$(head -1 "$file") #isolating title
-	tail=$(tail -n +3 "$file") #isolating body
-	sed 's/{{title}}/$head/' template.html > filename
-	for filename in "$inputdir"/*.txt; do
-		sed 's/{{body}}/$tail/' "$newfile" > "$outputdir/$filename.html" 
-	done
-done 
+	fileTitle="$(head -n 1 "$file")" #isolate title
+	fileBody="$(tail -n +3 "$file")" #isolate body
+	sed "s/{{title}}/$fileTitle/g" "template.html" | sed "s/{{body}}/$fileBody/g" > "$outputdir"/$("basename" "$file" ".txt").html
+	done 
