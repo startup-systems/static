@@ -25,6 +25,6 @@ for file in "$SOURCE_DIR"/*; do
     body=$(sed -n '3, $p' "$file");
 
     sed -e "s/{{title}}/$title/" < template.html > tmpfile;
-    sed -e "s/{{body}}/$body/" < tmpfile > $DEST_DIR/$filename.html;
+    sed -e "s/{{body}}/$body/" < tmpfile > "$DEST_DIR"/$filename.html;
     rm tmpfile;
 done
