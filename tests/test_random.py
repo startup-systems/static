@@ -69,4 +69,5 @@ def test_bodies(input_files, populated_output_dir):
 
     for input_file in input_files:
         path = os.path.join(populated_output_dir, "post{}.html".format(input_file.file_number))
-        helpers.check_body_text(path, input_file.body)
+        print(open(path).read());print("\nexpected\n")
+        print(input_file.body);helpers.check_body_text(path, input_file.body)
