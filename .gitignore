@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 output/
 report.json
+.DS_Store
