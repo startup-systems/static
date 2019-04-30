@@ -1,5 +1,5 @@
 # Static Site Builder
-
+ABC
 In this assignment, you are going to be creating a (simple) static site builder for blogs, as a shell script.
 
 ## Example
@@ -12,7 +12,7 @@ examples/
   — postone.txt
   — some-other-post.txt
 ```
-
+Test
 running the following:
 
 ```bash
@@ -30,7 +30,7 @@ output/
 In other words, for each of the original `.txt` files, a corresponding `.html` file should be created. If [`examples/simple/postone.txt`](`examples/simple/postone.txt`) contains
 
 ```
-Post 1 Title
+Post 1 Title Hello
 
 This is the body of Post 1.
 ```
